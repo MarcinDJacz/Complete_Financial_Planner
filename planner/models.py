@@ -1,3 +1,121 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
-# Create your models here.
+
+class CustomUser(AbstractUser):
+    date_of_birth = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.username
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    CATEGORY_TYPES = [
+        ('INCOME', 'Income'),
+        ('EXPENSE', 'Expense'),
+    ]
+    type = models.CharField(max_length=10, choices=CATEGORY_TYPES)
+
+    def __str__(self):
+        return f"{self.name} ({self.type})"
+
+
+class Budget(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    total_amount = models.DecimalField(max_digits=12, decimal_places=2)
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.name} - {self.owner}"
+
+
+class Operation(models.Model):
+    budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name='operations')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    description = models.TextField(blank=True)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    date = models.DateField()
+
+    def __str__(self):
+        return f"{self.category} - {self.amount}"
+
+
+class Debt(models.Model):
+    budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    due_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.name} - {self.amount}"
+
+
+class SavingCategory(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Savings(models.Model):
+    budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
+    category = models.ForeignKey(SavingCategory, on_delete=models.SET_NULL, null=True)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.category} - {self.amount}"
+
+
+class Portfolio(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name} ({self.owner})"
+
+
+class Instrument(models.Model):
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
+    symbol = models.CharField(max_length=10, db_index=True)
+    name = models.CharField(max_length=100)
+    quantity = models.DecimalField(max_digits=12, decimal_places=4)
+
+    def __str__(self):
+        return f"{self.symbol} - {self.quantity}"
+
+
+class CurrencyRate(models.Model):
+    currency_code = models.CharField(max_length=3, db_index=True)
+    rate_to_base = models.DecimalField(max_digits=12, decimal_places=6)
+    date_fetched = models.DateField()
+
+    class Meta:
+        unique_together = ('currency_code', 'date_fetched')
+
+    def __str__(self):
+        return f"{self.currency_code} - {self.rate_to_base} ({self.date_fetched})"
+
+    @classmethod
+    def get_latest_rate(cls, currency_code):
+        return cls.objects.filter(currency_code=currency_code).order_by('-date_fetched').first()
+
+
+class StockPrice(models.Model):
+    symbol = models.CharField(max_length=10, db_index=True)
+    price = models.DecimalField(max_digits=12, decimal_places=4)
+    date_fetched = models.DateField()
+
+    class Meta:
+        unique_together = ('symbol', 'date_fetched')
+
+    def __str__(self):
+        return f"{self.symbol} - {self.price} ({self.date_fetched})"
+
+    @classmethod
+    def get_latest_price(cls, symbol):
+        return cls.objects.filter(symbol=symbol).order_by('-date_fetched').first()

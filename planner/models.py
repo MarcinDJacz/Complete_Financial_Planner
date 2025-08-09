@@ -36,7 +36,7 @@ class Category(models.Model):
 
 
 class Budget(models.Model):
-    family = models.OneToOneField(Family, on_delete=models.CASCADE, related_name='budget')
+    family = models.OneToOneField(Family, on_delete=models.CASCADE, related_name='budget', null=True, blank=True)
     name = models.CharField(max_length=100)
     total_amount = models.DecimalField(max_digits=12, decimal_places=2)
     start_date = models.DateField()

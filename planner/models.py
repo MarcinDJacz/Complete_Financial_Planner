@@ -36,14 +36,14 @@ class Category(models.Model):
 
 
 class Budget(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    family = models.OneToOneField(Family, on_delete=models.CASCADE, related_name='budget')
     name = models.CharField(max_length=100)
     total_amount = models.DecimalField(max_digits=12, decimal_places=2)
     start_date = models.DateField()
     end_date = models.DateField()
 
     def __str__(self):
-        return f"{self.name} - {self.owner}"
+        return f"{self.name} - {self.family}"
 
 
 class Operation(models.Model):

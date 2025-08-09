@@ -3,12 +3,25 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
-class CustomUser(AbstractUser):
-    date_of_birth = models.DateField(null=True, blank=True)
+class Family(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.username
+        return self.name
 
+
+class CustomUser(AbstractUser):
+    date_of_birth = models.DateField(null=True, blank=True)
+    family = models.ForeignKey(
+        'Family',
+        on_delete=models.CASCADE,
+        related_name='members',
+        null=True,
+        blank=True
+    )
+    def __str__(self):
+        return self.username
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -119,3 +132,5 @@ class StockPrice(models.Model):
     @classmethod
     def get_latest_price(cls, symbol):
         return cls.objects.filter(symbol=symbol).order_by('-date_fetched').first()
+
+

@@ -1,17 +1,20 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
   <title>Home</title>
 {% endblock %}
 
 {% block content %}
   <h1>Complete Financial Planner - Home</h1>
-  <p>Welcome to the your Planner!</p>
-  <h3>Planner basic content:</h3>
-  <ul>
-    <li>Num inmates: {{ num_inmates }}</li>
-    <li>Savings: {{ summary_savings }} </li>
-    <li>Debts: {{ summary_debts }} </li>
-    <li>Investments: {{ summary_investments }} </li>
-  </ul>
-  <p>You have visited this site {{ num_visit }} time{{ num_visit|pluralize }}</p>
+  <div class="content">
+    <p>Welcome to the your Planner!</p>
+    <h3>Planner basic content:</h3>
+    <ul>
+      <li>Num inmates: {{ num_inmates }}</li>
+      <li>Savings: {{ summary_savings }} </li>
+      <li>Debts: {{ summary_debts }} </li>
+      <li>Investments: {{ summary_investments }} </li>
+    </ul>
+    <p>You have visited this site {{ num_visit }} time{{ num_visit|pluralize }}</p>
+  </div>
 {% endblock %}

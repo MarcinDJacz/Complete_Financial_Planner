@@ -1,5 +1,6 @@
 body{
-    margin-top: 20px;
+  margin-top: 20px;
+
 }
 
 .nav-icon {
@@ -13,10 +14,24 @@ body{
 }
 
 .nav-icon img {
-  max-width: 24px;
-  max-height: 24px;
+  max-width: 50px;
+  max-height: 50px;
 }
 
 .nav-icon:hover {
   background-color: #d0d0d0;
+}
+
+ul.list-unstyled.d-flex li:not(:last-child) {
+  margin-right: 40px;
+}
+
+h1{
+  text-align: center;
+}
+
+.content{
+  width: 300px;
+  border: 1px #f0f0f0 solid;
+  margin: 0 auto;
 }

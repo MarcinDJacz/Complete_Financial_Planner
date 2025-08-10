@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}
+    <title>Comnplete Financial Planner</title>
+  {% endblock %}
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="container-fluid d-flex flex-column min-vh-100">
+  <!-- Główna treść -->
+  <main class="flex-fill">
+    {% block content %}
+
+    {% endblock %}
+  </main>
+
+  <!-- Pasek nawigacji na dole -->
+  <footer class="bg-light border-top py-2 fixed-bottom">
+    {% block bottom_nav %}
+      {% include 'includes/bottom_nav.html' %}
+    {% endblock %}
+  </footer>
+
+</div>
+
+</body>
+</html>

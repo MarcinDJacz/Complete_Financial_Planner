@@ -1,0 +1,32 @@
+<nav class="d-flex justify-content-center py-2">
+  <ul class="list-unstyled d-flex gap-3 mb-0">
+    <li>
+      <a href="{% url 'planner:index' %}" class="nav-icon d-flex align-items-center justify-content-center">
+        <img src="{% static 'icons/home.svg' %}" alt="Home" />
+      </a>
+    </li>
+
+    <li>
+      <a href="{% url 'planner:inmates_list' %}" class="nav-icon d-flex align-items-center justify-content-center">
+        <img src="{% static 'icons/inmates.svg' %}" alt="Inmates" />
+      </a>
+    </li>
+
+    <li>
+      <a href="{% url 'planner:charts' %}" class="nav-icon d-flex align-items-center justify-content-center">
+        <img src="{% static 'icons/charts.svg' %}" alt="Charts" />
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'planner:stock' %}" class="nav-icon d-flex align-items-center justify-content-center">
+        <img src="{% static 'icons/stock.svg' %}" alt="Stock" />
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'planner:contact' %}" class="nav-icon d-flex align-items-center justify-content-center">
+        <img src="{% static 'icons/contact.svg' %}" alt="Contact" />
+      </a>
+    </li>
+
+  </ul>
+</nav>

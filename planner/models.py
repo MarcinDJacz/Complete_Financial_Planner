@@ -20,8 +20,10 @@ class CustomUser(AbstractUser):
         null=True,
         blank=True
     )
+
     def __str__(self):
         return self.username
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -36,7 +38,10 @@ class Category(models.Model):
 
 
 class Budget(models.Model):
-    family = models.OneToOneField(Family, on_delete=models.CASCADE, related_name='budget', null=True, blank=True)
+    family = models.OneToOneField(Family, on_delete=models.CASCADE,
+                                  related_name='budget',
+                                  null=True,
+                                  blank=True)
     name = models.CharField(max_length=100)
     total_amount = models.DecimalField(max_digits=12, decimal_places=2)
     start_date = models.DateField()
@@ -47,9 +52,11 @@ class Budget(models.Model):
 
 
 class Operation(models.Model):
-    budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name='operations')
+    budget = models.ForeignKey(Budget, on_delete=models.CASCADE,
+                               related_name='operations')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.SET_NULL, null=True)
     description = models.TextField(blank=True)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateField()
@@ -77,7 +84,8 @@ class SavingCategory(models.Model):
 
 class Savings(models.Model):
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
-    category = models.ForeignKey(SavingCategory, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(SavingCategory,
+                                 on_delete=models.SET_NULL, null=True)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
 
     def __str__(self):
@@ -85,7 +93,8 @@ class Savings(models.Model):
 
 
 class Portfolio(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -111,11 +120,13 @@ class CurrencyRate(models.Model):
         unique_together = ('currency_code', 'date_fetched')
 
     def __str__(self):
-        return f"{self.currency_code} - {self.rate_to_base} ({self.date_fetched})"
+        return (f"{self.currency_code} - {self.rate_to_base} "
+                f"({self.date_fetched})")
 
     @classmethod
     def get_latest_rate(cls, currency_code):
-        return cls.objects.filter(currency_code=currency_code).order_by('-date_fetched').first()
+        return (cls.objects.filter(currency_code=currency_code)
+                .order_by('-date_fetched').first())
 
 
 class StockPrice(models.Model):
@@ -131,13 +142,17 @@ class StockPrice(models.Model):
 
     @classmethod
     def get_latest_price(cls, symbol):
-        return cls.objects.filter(symbol=symbol).order_by('-date_fetched').first()
+        return (cls.objects.filter(symbol=symbol)
+                .order_by('-date_fetched').first())
 
 
 class Cash(models.Model):
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE, related_name='cash_balances')
+    portfolio = models.ForeignKey(Portfolio,
+                                  on_delete=models.CASCADE,
+                                  related_name='cash_balances')
     currency = models.CharField(max_length=3, default='PLN')
     amount = models.DecimalField(max_digits=15, decimal_places=2)
 
     def __str__(self):
-        return f"{self.amount} {self.currency} in {self.portfolio.name}"
+        return (f"{self.amount} {self.currency}"
+                f" in {self.portfolio.name}")

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import CustomUser, Budget
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def index(request):
     num_inmates = CustomUser.objects.all().count()
     summary_savings = 0 # on start

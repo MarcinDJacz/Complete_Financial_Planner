@@ -21,5 +21,6 @@ from planner.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", index, name="home"),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("planner/", include("planner.urls", namespace="planner")),
 ]

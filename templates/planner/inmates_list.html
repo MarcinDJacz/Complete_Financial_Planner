@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Inmates List
+    <!--<a class="btn btn-primary" style="float: right" href="{ url 'planner:inmate-create' %}">+</a> -->
+  </h1>
+  {% if inmates %}
+    <table class="table table-striped">
+    <thead>{{ inmate.family.name }}</thead>
+      <tr>
+        <th>Full name</th>
+        <th>Username</th>
+      </tr>
+    {% for inmate in inmates %}
+      <tr>
+        <td>{{ inmate.get_full_name }}</td>
+        <td>{{ inmate.username }}</td>
+      </tr>
+    {%  endfor %}
+    </table>
+  {% else %}
+    <p>No inmates yet.</p>
+  {% endif %}
+{%  endblock %}

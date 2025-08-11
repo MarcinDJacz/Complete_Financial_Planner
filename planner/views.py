@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import CustomUser, Budget
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
+
 
 @login_required
 def index(request):
@@ -18,3 +21,9 @@ def index(request):
         "num_visit": num_visit + 1,
     }
     return render(request,'planner/index.html', context)
+
+
+class InmatesListView(LoginRequiredMixin, generic.ListView):
+    model = CustomUser
+    template_name = "planner/inmates_list.html"
+    context_object_name = "inmates"

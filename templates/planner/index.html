@@ -10,7 +10,7 @@
     <p>Welcome to the your Planner!</p>
     <h3>Planner basic content:</h3>
     <ul>
-      <li>Num inmates: {{ num_inmates }}</li>
+      <li><a href="{% url 'planner:inmates_list' %}">Inmates:</a> {{ num_inmates }}</li>
       <li>Savings: {{ summary_savings }} </li>
       <li>Debts: {{ summary_debts }} </li>
       <li>Investments: {{ summary_investments }} </li>

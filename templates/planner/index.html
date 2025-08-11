@@ -7,7 +7,7 @@
 {% block content %}
   <h1>Complete Financial Planner - Home</h1>
   <div class="content">
-    <p>Welcome to the your Planner!</p>
+    <p>Welcome to the your Planner, <strong>{{ user.username }}!</strong></p>
     <h3>Planner basic content:</h3>
     <ul>
       <li><a href="{% url 'planner:inmates_list' %}">Inmates:</a> {{ num_inmates }}</li>

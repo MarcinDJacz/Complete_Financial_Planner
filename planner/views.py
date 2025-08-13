@@ -125,32 +125,35 @@ class DashboardView(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         family = self.request.user.family
 
+        # pobranie danych
         savings = Savings.objects.filter(budget__family=family).order_by('date')
         debts = Debt.objects.filter(budget__family=family).order_by('date')
 
+        # przygotowanie wykresu
+        dates = sorted(set([s.date for s in savings] + [d.date for d in debts]))
         savings_cum = []
-        total_savings = 0
-        dates_savings = []
-        for s in savings:
-            total_savings += s.amount
-            savings_cum.append(total_savings)
-            dates_savings.append(s.date)
-
         debts_cum = []
-        total_debt = 0
-        dates_debt = []
-        for d in debts:
-            total_debt += d.amount
-            debts_cum.append(total_debt)
-            dates_debt.append(d.date)
 
+        total_savings = 0
+        for d in dates:
+            # kumulacja oszczędności
+            total_savings += sum(s.amount for s in savings if s.date == d)
+            savings_cum.append(total_savings)
+
+            # kumulacja długu z uwzględnieniem rat
+            total_debt = 0
+            for debt in debts:
+                if debt.date <= d:  # jeśli dług już "istnieje"
+                    months_passed = max(0, (d.year - debt.date.year) * 12 + (d.month - debt.date.month))
+                    total_payment = (debt.rate or 0) * months_passed
+                    total_debt += max(0, debt.amount - total_payment)
+            debts_cum.append(total_debt)
+
+        # rysowanie wykresu
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=dates_savings, y=savings_cum, mode='lines+markers', name='Savings'))
-        fig.add_trace(go.Scatter(x=dates_debt, y=debts_cum, mode='lines+markers', name='Debts'))
-        fig.update_layout(title='Family Finance Overview',
-                          xaxis_title='Date',
-                          yaxis_title='Amount',
-                          template='plotly_white')
+        fig.add_trace(go.Scatter(x=dates, y=savings_cum, mode='lines', name='Savings'))
+        fig.add_trace(go.Scatter(x=dates, y=debts_cum, mode='lines', name='Debts'))
+        fig.update_layout(title='Family Finance Overview', xaxis_title='Date', yaxis_title='Amount')
 
         context['graph_html'] = fig.to_html(full_html=False)
         return context

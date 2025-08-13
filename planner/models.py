@@ -75,6 +75,7 @@ class Debt(models.Model):
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     date = models.DateField(null=True, blank=True)
+    rate = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     due_date = models.DateField()
 
     def __str__(self):

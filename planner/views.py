@@ -3,7 +3,7 @@ from .models import CustomUser
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-
+from .forms import UserSettingsForm
 
 @login_required
 def index(request):
@@ -33,3 +33,11 @@ class InmatesListView(LoginRequiredMixin, generic.ListView):
 class InmatesDetailView(LoginRequiredMixin, generic.DetailView):
     model = CustomUser
     template_name = "planner/inmates_detail.html"
+
+
+class UserSettingsView(LoginRequiredMixin, generic.UpdateView):
+    model = CustomUser
+    form_class = UserSettingsForm
+
+    def get_object(self, queryset=None):
+        return self.request.user

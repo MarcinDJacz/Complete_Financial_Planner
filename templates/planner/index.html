@@ -16,7 +16,9 @@
       <li>Debts: {{ summary_debts }} </li>
       <li>Investments: {{ summary_investments }} </li>
       <hr>
-      <li>Other data</li>
+      <li>Income: {{ income_sum }} zł</li>
+      <li>Expense: {{ expense_sum }} zł</li>
+      <li class="{% if surplus_deficit > 0 %}positive{% elif surplus_deficit < 0 %}negative{% endif %}">surplus/deficit: {{ surplus_deficit  }} zł</li>
     </ul>
     <p>You have visited this site {{ num_visit }} time{{ num_visit|pluralize }} during this session.</p>
   </div>

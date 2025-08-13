@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Budget's Operations List
+    <!--<a class="btn btn-primary" style="float: right" href="{ url 'planner:inmate-create' %}">+</a> -->
+  </h1>
+  {% if operations %}
+    <table class="table table-striped">
+    <h2 style="text-align: center; color: brown">{{ operations.1.budget.family.name }}</h2>
+
+      <tr>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Description</th>
+      </tr>
+    {% for op in operations %}
+      <tr>
+        <td>{{ op.category }}</td>
+        <td>
+          {% with op.amount|floatformat:2 as amt %}
+              {% if op.category.type == "INCOME" %}
+                <span class="positive">+{{ amt }}</span>
+              {% else %}
+                <span class="negative">-{{ amt }}</span>
+              {% endif %}
+          {% endwith %}
+        </td>
+        <td>{{ op.description }}</td>
+      </tr>
+    {%  endfor %}
+    </table>
+  {% else %}
+    <p>No operations yet.</p>
+  {% endif %}
+{%  endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.urls import reverse
 
 
 class Family(models.Model):
@@ -23,6 +24,10 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def get_absolute_url(self):
+        return reverse("planner:inmates_detail", args=[str(self.id)])
+
 
 
 class Category(models.Model):

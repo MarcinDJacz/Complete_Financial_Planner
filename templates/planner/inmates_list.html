@@ -7,14 +7,14 @@
   </h1>
   {% if inmates %}
     <table class="table table-striped">
-    <thead>{{ inmate.family.name }}</thead>
+    <thead>{{ inmates.1.family.name }}</thead>
       <tr>
         <th>Full name</th>
         <th>Username</th>
       </tr>
     {% for inmate in inmates %}
       <tr>
-        <td>{{ inmate.get_full_name }}</td>
+        <td><a href="{{ inmate.get_absolute_url }}">{{ inmate.get_full_name }}</a></td>
         <td>{{ inmate.username }}</td>
       </tr>
     {%  endfor %}

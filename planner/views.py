@@ -28,3 +28,8 @@ class InmatesListView(LoginRequiredMixin, generic.ListView):
     model = CustomUser
     template_name = "planner/inmates_list.html"
     context_object_name = "inmates"
+
+
+class InmatesDetailView(LoginRequiredMixin, generic.DetailView):
+    model = CustomUser
+    template_name = "planner/inmates_detail.html"

@@ -114,3 +114,4 @@ class InmateCreateView(generic.CreateView):
     model = CustomUser
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('planner:index')
+    template_name = "planner/user_create_form.html"

@@ -8,13 +8,13 @@
   <h1>'{{ request.user.family.name|default:"No family" }}'</h1>
   <div class="content">
     <p>Welcome to the your Planner, <strong>{{ user.username }}!</strong></p>
-    <h3>Planner basic content:</h3>
+    <h3>Planner basic info:</h3>
     <ul>
       <li><a href="{% url 'planner:inmates_list' %}">Inmates:</a> {{ num_inmates }}</li>
       <hr>
-      <li>Savings: {{ summary_savings }} </li>
-      <li>Debts: {{ summary_debts }} </li>
-      <li>Investments: {{ summary_investments }} </li>
+      <li class="positive">Savings: {{ summary_savings }} zł</li>
+      <li class="negative">Debts: {{ summary_debts }} zł</li>
+      <li>Investments: {{ summary_investments|floatformat:0 }} zł</li>
       <hr>
       <li>Income: {{ income_sum }} zł</li>
       <li>Expense: {{ expense_sum }} zł</li>

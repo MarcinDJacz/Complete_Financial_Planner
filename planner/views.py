@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from .models import CustomUser, Operation
+from .models import CustomUser, Operation, Savings, Debt, Portfolio
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -11,16 +11,17 @@ from .forms import UserSettingsForm, ContactMessageForm
 @login_required
 def index(request):
     num_inmates = CustomUser.objects.all().count()
-    summary_savings = 0  # on start
-    summary_debts = 0
+    summary_savings = Savings.objects.aggregate(total=Sum('amount'))['total'] or 0
+    summary_debts = Debt.objects.aggregate(total=Sum('amount'))['total'] or 0
     income_sum = Operation.objects.filter(category__type='INCOME').aggregate(total=Sum('amount'))['total'] or 0
 
     expense_sum = Operation.objects.filter(category__type='EXPENSE').aggregate(total=Sum('amount'))['total'] or 0
 
-
-    summary_investments = 0  # add to model budget total_investments
     num_visit = request.session.get('num_visit', 0)
     request.session['num_visit'] = num_visit + 1
+
+    portfolios = Portfolio.objects.all()
+    total_value = sum(p.current_value for p in portfolios)
 
     context = {
         "num_inmates": num_inmates,
@@ -28,9 +29,10 @@ def index(request):
         "expense_sum": expense_sum,
         "summary_savings": summary_savings,
         "summary_debts": summary_debts,
-        "summary_investments": summary_investments,
         "num_visit": num_visit + 1,
-        "surplus_deficit": (income_sum - expense_sum)
+        "surplus_deficit": (income_sum - expense_sum),
+        "portfolios": portfolios,
+        "summary_investments": total_value,
     }
     return render(request, 'planner/index.html', context)
 

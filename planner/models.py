@@ -105,6 +105,10 @@ class Portfolio(models.Model):
     def __str__(self):
         return f"{self.name} ({self.owner})"
 
+    @property
+    def current_value(self):
+        return sum(instr.current_value for instr in self.instrument_set.all())
+
 
 class Instrument(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
@@ -114,6 +118,13 @@ class Instrument(models.Model):
 
     def __str__(self):
         return f"{self.symbol} - {self.quantity}"
+    
+    @property
+    def current_value(self):
+        latest_price = StockPrice.get_latest_price(self.symbol)
+        if latest_price:
+            return self.quantity * latest_price.price
+        return 0
 
 
 class CurrencyRate(models.Model):

@@ -13,6 +13,8 @@
         <th>Category</th>
         <th>Amount</th>
         <th>Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
     {% for op in operations %}
       <tr>
@@ -27,6 +29,8 @@
           {% endwith %}
         </td>
         <td>{{ op.description }}</td>
+        <td><a href="{% url 'planner:operations_update' pk=op.id %}">Update</a></td>
+        <td><a href="{% url 'planner:operations_delete' pk=op.id %}">Delete</a></td>
       </tr>
     {%  endfor %}
     </table>

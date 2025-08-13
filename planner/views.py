@@ -82,3 +82,17 @@ class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
+
+class OperationsDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Operation
+    fields = '__all__'
+    template_name = "planner/operations_format_confirm_delete.html"
+    success_url = reverse_lazy('planner:operations')
+
+
+class OperationsUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Operation
+    fields = '__all__'
+    success_url = reverse_lazy('planner:operations')
+    template_name = "planner/operations_update_form.html"

@@ -119,7 +119,7 @@ class Instrument(models.Model):
     symbol = models.CharField(max_length=10, db_index=True)
     name = models.CharField(max_length=100)
     quantity = models.DecimalField(max_digits=12, decimal_places=4)
-
+    date = models.DateField(null=True, blank=True)
     def __str__(self):
         return f"{self.symbol} - {self.quantity}"
     

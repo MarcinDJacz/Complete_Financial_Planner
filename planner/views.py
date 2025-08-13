@@ -71,13 +71,12 @@ class OperationsListView(LoginRequiredMixin, generic.ListView):
     model = Operation
     template_name = "planner/operations_list.html"
     context_object_name = "operations"
-    # paginate_by = 10
 
     def get_paginate_by(self, queryset):
         per_page = self.request.GET.get('per_page')
         if per_page and per_page.isdigit():
             return int(per_page)
-        return 10  # domyślna wartość
+        return 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

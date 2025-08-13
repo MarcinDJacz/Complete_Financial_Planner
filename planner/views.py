@@ -71,7 +71,15 @@ class OperationsListView(LoginRequiredMixin, generic.ListView):
     model = Operation
     template_name = "planner/operations_list.html"
     context_object_name = "operations"
+    # paginate_by = 10
 
+    def get_paginate_by(self, queryset):
+        per_page = self.request.GET.get('per_page', 10)
+        try:
+            per_page = int(per_page)
+        except ValueError:
+            per_page = 10
+        return per_page
 
 class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
     model = Operation

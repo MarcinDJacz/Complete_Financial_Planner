@@ -34,3 +34,9 @@ class OperationCreateForm(forms.ModelForm):
                 self.fields['budget'].initial = budget
 
         self.fields['date'].initial = timezone.now().date()
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name','email',)

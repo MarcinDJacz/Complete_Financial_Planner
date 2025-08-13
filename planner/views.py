@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.db.models import Sum
@@ -5,7 +6,7 @@ from .models import CustomUser, Operation, Savings, Debt, Portfolio
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import UserSettingsForm, ContactMessageForm, OperationCreateForm
+from .forms import UserSettingsForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
 
 
 @login_required
@@ -107,3 +108,9 @@ class OperationsUpdateView(LoginRequiredMixin, generic.UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('planner:operations')
     template_name = "planner/operations_update_form.html"
+
+
+class InmateCreateView(generic.CreateView):
+    model = CustomUser
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('planner:index')

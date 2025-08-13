@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Inmates List
-    <!--<a class="btn btn-primary" style="float: right" href="{ url 'planner:inmate-create' %}">+</a> -->
-  </h1>
+  <h1>Inmates List<a class="btn btn-primary" style="float: right" href="{% url 'planner:inmate-create' %}">Add new User</a></h1></h1>
+
   {% if inmates %}
     <table class="table table-striped">
     <h2 style="text-align: center; color: brown">{{ inmates.1.family.name }}</h2>

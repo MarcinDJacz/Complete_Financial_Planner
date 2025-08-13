@@ -1,5 +1,5 @@
 from django.urls import path
-from planner.views import index, InmatesListView, InmatesDetailView, UserSettingsView, ContactMessageView, OperationsListView
+from planner.views import index, InmatesListView, InmatesDetailView, UserSettingsView, ContactMessageView, OperationsListView, OperationsCreateView
 
 urlpatterns = [
     path("", index, name="index"),
@@ -8,6 +8,7 @@ urlpatterns = [
     path("settings/", UserSettingsView.as_view(), name="user_settings"),
     path("contact/", ContactMessageView.as_view(), name="contact"),
     path("operations/", OperationsListView.as_view(), name="operations"),
+    path("operations/create/", OperationsCreateView.as_view(), name="operations_create"),
 ]
 
 app_name = "planner"

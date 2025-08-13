@@ -5,7 +5,7 @@ from .models import CustomUser, Operation, Savings, Debt, Portfolio
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import UserSettingsForm, ContactMessageForm
+from .forms import UserSettingsForm, ContactMessageForm, OperationCreateForm
 
 
 @login_required
@@ -71,3 +71,14 @@ class OperationsListView(LoginRequiredMixin, generic.ListView):
     model = Operation
     template_name = "planner/operations_list.html"
     context_object_name = "operations"
+
+
+class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Operation
+    form_class = OperationCreateForm
+    success_url = reverse_lazy('planner:operations')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs

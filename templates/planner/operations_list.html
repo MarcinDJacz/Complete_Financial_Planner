@@ -3,7 +3,7 @@
 {% block content %}
   <h1>
     Budget's Operations List
-    <!--<a class="btn btn-primary" style="float: right" href="{ url 'planner:inmate-create' %}">+</a> -->
+    <a class="btn btn-primary" style="float: right" href="{% url 'planner:operations_create' %}">+</a>
   </h1>
   {% if operations %}
     <table class="table table-striped">

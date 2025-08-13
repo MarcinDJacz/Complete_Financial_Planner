@@ -74,12 +74,16 @@ class OperationsListView(LoginRequiredMixin, generic.ListView):
     # paginate_by = 10
 
     def get_paginate_by(self, queryset):
-        per_page = self.request.GET.get('per_page', 10)
-        try:
-            per_page = int(per_page)
-        except ValueError:
-            per_page = 10
-        return per_page
+        per_page = self.request.GET.get('per_page')
+        if per_page and per_page.isdigit():
+            return int(per_page)
+        return 10  # domyślna wartość
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        per_page = self.request.GET.get('per_page')
+        context['per_page_value'] = int(per_page) if per_page and per_page.isdigit() else 10
+        return context
 
 class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
     model = Operation

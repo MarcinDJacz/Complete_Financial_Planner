@@ -74,6 +74,7 @@ class Debt(models.Model):
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
+    date = models.DateField(null=True, blank=True)
     due_date = models.DateField()
 
     def __str__(self):
@@ -82,6 +83,7 @@ class Debt(models.Model):
 
 class SavingCategory(models.Model):
     name = models.CharField(max_length=100)
+
 
     def __str__(self):
         return self.name
@@ -92,6 +94,7 @@ class Savings(models.Model):
     category = models.ForeignKey(SavingCategory,
                                  on_delete=models.SET_NULL, null=True)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
+    date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.category} - {self.amount}"

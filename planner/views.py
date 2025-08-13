@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .forms import UserSettingsForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
+import plotly.graph_objs as go
 
 
 @login_required
@@ -115,3 +116,43 @@ class InmateCreateView(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('planner:index')
     template_name = "planner/user_create_form.html"
+
+
+class DashboardView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "planner/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        family = self.request.user.family
+
+        savings = Savings.objects.filter(budget__family=family).order_by('date')
+        debts = Debt.objects.filter(budget__family=family).order_by('date')
+
+        savings_cum = []
+        total_savings = 0
+        dates_savings = []
+        for s in savings:
+            total_savings += s.amount
+            savings_cum.append(total_savings)
+            dates_savings.append(s.date)
+
+        debts_cum = []
+        total_debt = 0
+        dates_debt = []
+        for d in debts:
+            total_debt += d.amount
+            debts_cum.append(total_debt)
+            dates_debt.append(d.date)
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=dates_savings, y=savings_cum, mode='lines+markers', name='Savings'))
+        fig.add_trace(go.Scatter(x=dates_debt, y=debts_cum, mode='lines+markers', name='Debts'))
+        fig.update_layout(title='Family Finance Overview',
+                          xaxis_title='Date',
+                          yaxis_title='Amount',
+                          template='plotly_white')
+
+        context['graph_html'] = fig.to_html(full_html=False)
+        return context
+
+

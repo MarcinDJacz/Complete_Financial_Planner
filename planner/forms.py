@@ -4,7 +4,7 @@ from django import forms
 from planner.models import CustomUser
 
 
-class UserSettingsForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+class UserSettingsForm(forms.ModelForm):
+    class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name')

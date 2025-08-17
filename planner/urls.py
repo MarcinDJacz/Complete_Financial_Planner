@@ -13,24 +13,44 @@ from planner.views import (index,
                            FamilyUpdateView,
                            MessagesListView,
                            MessageDetailView,
-                           MessagesDeleteView)
+                           MessagesDeleteView,
+                           SavingsDebtsListView,
+                           SavingsCreateView,
+                           SavingsDeleteView,
+                           SavingsUpdateView,
+                           DebtsCreateView,
+                           DebtsDeleteView,
+                           DebtsUpdateView)
 
 urlpatterns = [
     path("", index, name="index"),
     path("inmates/", InmatesListView.as_view(), name="inmates_list"),
     path("inmates/<int:pk>", InmatesDetailView.as_view(), name="inmates_detail"),
+    path("inmates/create/", InmateCreateView.as_view(), name="inmate-create"),
+
     path("settings/", UserSettingsView.as_view(), name="user_settings"),
     path("contact/", ContactMessageView.as_view(), name="contact"),
+
     path("messages/", MessagesListView.as_view(), name="messages_list"),
     path("messages/<int:pk>", MessageDetailView.as_view(), name="message_detail"),
     path("messages/<int:pk>/delete/", MessagesDeleteView.as_view(), name="message_delete"),
+
     path("operations/", OperationsListView.as_view(), name="operations"),
     path("operations/create/", OperationsCreateView.as_view(), name="operations_create"),
     path("operations/<int:pk>/delete/", OperationsDeleteView.as_view(), name="operations_delete"),
     path("operations/<int:pk>/update/", OperationsUpdateView.as_view(), name="operations_update"),
-    path("inmates/create/", InmateCreateView.as_view(), name="inmate-create"),
+
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path("family/<int:pk>/update/", FamilyUpdateView.as_view(), name="family_update"),
-    ]
+
+    path("savings_and_debts/", SavingsDebtsListView.as_view(), name="savings_and_debts"),
+    path("savings/create/", SavingsCreateView.as_view(), name="savings_create"),
+    path("savings/<int:pk>/delete/", SavingsDeleteView.as_view(), name="savings_delete"),
+    path("savings/<int:pk>/update/", SavingsUpdateView.as_view(), name="savings_update"),
+    path("debts/create/", DebtsCreateView.as_view(), name="debts_create"),
+    path("debt/<int:pk>/delete/", DebtsDeleteView.as_view(), name="debt_delete"),
+    path("debt/<int:pk>/update/", DebtsUpdateView.as_view(), name="debt_update"),
+
+]
 
 app_name = "planner"

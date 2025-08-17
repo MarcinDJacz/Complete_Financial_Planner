@@ -6,7 +6,7 @@ from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family, Con
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import UserSettingsForm, FamilySettingsForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
+from .forms import UserSettingsForm, DebtCreationForm, FamilySettingsForm, SavingsCreationForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
 from .utils import get_family_graph
 
 
@@ -189,3 +189,56 @@ class MessagesDeleteView(LoginRequiredMixin, generic.DeleteView):
     fields = '__all__'
     template_name = "planner/message_format_confirm_delete.html"
     success_url = reverse_lazy('planner:messages_list')
+
+
+class SavingsDebtsListView(LoginRequiredMixin, generic.ListView):
+    model = Savings
+    template_name = "planner/savings_and_debts.html"
+    context_object_name = "savings_and_debts"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["savings"] = Savings.objects.all()
+        context["debts"] = Debt.objects.all()
+        return context
+
+
+class SavingsCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Savings
+    form_class = SavingsCreationForm
+    success_url = reverse_lazy('planner:savings_and_debts')
+    template_name = "planner/savings_create_form.html"
+
+
+class SavingsUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Savings
+    fields = '__all__'
+    success_url = reverse_lazy('planner:savings_and_debts')
+    template_name = "planner/savings_update_form.html"
+
+
+class SavingsDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Savings
+    fields = '__all__'
+    template_name = "planner/savings_format_confirm_delete.html"
+    success_url = reverse_lazy('planner:savings_and_debts')
+
+
+class DebtsCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Debt
+    form_class = DebtCreationForm
+    success_url = reverse_lazy('planner:savings_and_debts')
+    template_name = "planner/debts_create_form.html"
+
+class DebtsDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Debt
+    fields = '__all__'
+    template_name = "planner/debts_format_confirm_delete.html"
+    success_url = reverse_lazy('planner:savings_and_debts')
+
+
+class DebtsUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Debt
+    fields = '__all__'
+    success_url = reverse_lazy('planner:savings_and_debts')
+    template_name = "planner/debt_update_form.html"

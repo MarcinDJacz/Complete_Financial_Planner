@@ -16,7 +16,7 @@
     <!-- [ Main Content ] start -->
     <div class="row">
         <!-- order-card start -->
-         <div class="col-md-6 col-xl-3">
+         <div class="col-md-6 col-xl-3" onclick="window.location='{% url 'planner:savings_and_debts' %}'" style="cursor:pointer;">
             <div class="card bg-c-yellow order-card">
                 <div class="card-body">
                     <h6 class="text-white">Savings</h6>
@@ -32,7 +32,7 @@
                   </div>
             </div>
         </div>
-        <div class="col-md-6 col-xl-3">
+        <div class="col-md-6 col-xl-3" onclick="window.location='{% url 'planner:operations' %}'" style="cursor:pointer;">
             <div class="card bg-c-green order-card">
                 <div class="card-body">
                     <h6 class="text-white">Income</h6>
@@ -47,7 +47,7 @@
     </div>
 
         <div class="row">
-       <div class="col-md-6 col-xl-3">
+       <div class="col-md-6 col-xl-3"  onclick="window.location='{% url 'planner:inmates_list' %}'" style="cursor:pointer;">
             <div class="card bg-c-blue order-card">
                 <div class="card-body">
                     <h6 class="text-white">Inmates</h6>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-xl-3">
+        <div class="col-md-6 col-xl-3"  onclick="window.location='{% url 'planner:messages_list' %}'" style="cursor:pointer;">
             <div class="card bg-c-yellow order-card">
                 <div class="card-body">
                     <h6 class="text-white">Messages</h6>

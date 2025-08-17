@@ -156,3 +156,15 @@ class MessagesListView(LoginRequiredMixin, generic.ListView):
         per_page = self.request.GET.get('per_page')
         context['per_page_value'] = int(per_page) if per_page and per_page.isdigit() else 10
         return context
+
+
+class MessageDetailView(LoginRequiredMixin, generic.DetailView):
+    model = ContactMessage
+    template_name = "planner/message_detail.html"
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if not obj.is_read:
+            obj.is_read = True
+            obj.save(update_fields=["is_read"])
+        return obj

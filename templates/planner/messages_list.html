@@ -33,17 +33,24 @@
         <th>Message</th>
       </tr>
     {% for message in messages %}
-      <a href="">
-      <tr class="{% if not message.is_read %}unread{% endif %}">
+
+      <tr class="{% if not message.is_read %}unread{% endif %}" onclick="window.location='{% url 'planner:message_detail' pk=message.id %}'" style="cursor:pointer;">
         <td>{{ message.name }}</td>
         <td>{{ message.email }}</td>
         <td>{{ message.subject }}</td>
         <td>{{ message.message|truncatechars:50 }}</td>
       </tr>
-      </a>
+
     {%  endfor %}
     </table>
   {% else %}
     <p>No messages yet.</p>
   {% endif %}
+<script>
+  window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+</script>
 {%  endblock %}

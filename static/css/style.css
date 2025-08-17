@@ -916,6 +916,7 @@ progress {
     margin-top: calc(-1 * var(--bs-gutter-y));
     margin-right: calc(-.5 * var(--bs-gutter-x));
     margin-left: calc(-.5 * var(--bs-gutter-x));
+    justify-content: center;
 }
 
 .row > * {
@@ -24230,6 +24231,9 @@ pre[class*=language-]:before {
 
     .pcoded-content {
         padding: 25px 15px;
+        max-width: 800px;
+        margin: 0 auto;
+        border: 1px solid red;
     }
 
     .card {
@@ -24275,7 +24279,7 @@ pre[class*=language-]:before {
 /* responsive horizontal menu */
 @media only screen and (max-width: 991px) {
     .pcoded-navbar.theme-horizontal {
-        margin-left: 0;
+        margin-left: auto 0;
     }
 
     .pcoded-navbar.theme-horizontal ~ .pcoded-header .container > .collapse:not(.show),

@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from planner.models import CustomUser, ContactMessage, Operation, Budget
+from planner.models import CustomUser, Family, ContactMessage, Operation, Budget
 from django.utils import timezone
 
 
@@ -11,6 +11,12 @@ class UserSettingsForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('email', 'first_name', 'last_name', 'family')
+
+
+class FamilySettingsForm(forms.ModelForm):
+    class Meta:
+        model = Family
+        fields = ('name',)
 
 
 class ContactMessageForm(forms.ModelForm):

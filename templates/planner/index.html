@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="row">
+    <!-- order-card start -->
+     <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-yellow order-card">
+            <div class="card-body">
+                <h6 class="text-white">Savings</h6>
+                <h2 class="text-end text-white"><i
+                        class="feather icon-repeat float-start"></i><span>4000 zł</span></h2>
+                <h6 class="text-white">Debts</h6>
+                <h2 class="text-end text-white"><i
+                        class="feather icon-repeat float-start"></i><span>11500 zł</span></h2>
+                <p class="m-b-0">Difference<span class="float-end">-8000zł</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-green order-card">
+            <div class="card-body">
+                <h6 class="text-white">Income</h6>
+                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>7480 zł</span>
+                <h6 class="text-white">Expense</h6>
+                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>-4998 zł</span>
+                </h2>
+                <p class="m-b-0">Surplus/deficit<span class="float-end">2482 zł</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="row">
+   <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-blue order-card">
+            <div class="card-body">
+                <h6 class="text-white">Inmates</h6>
+                <h2 class="text-end text-white"><i class="feather icon-shopping-cart float-start"></i><span>3</span></h2>
+                <p class="m-b-0">Family<span class="float-end">'Nasza Rodzinka'</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-red order-card">
+            <div class="card-body">
+                <h6 class="text-white">Author</h6>
+                <h2 class="text-end text-white"><i
+                        class="feather icon-award float-start"></i><span>Marcin Djaczuk</span></h2>
+                <p class="m-b-0">E-mail<span class="float-end">marcindjaczuk@gmail.com</span></p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- order-card end -->
+    <!-- users visite start -->
+    <div class="row">
+    <div class="col-md-12 col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h1>
+                  Savings & Investments vs Debts
+                </h1>
+            </div>
+            <div class="card-body ps-0 pb-0">
+                {{ graph_html|safe }}
+            </div>
+        </div>
+    </div></div>
+
+</div>
+<!-- [ Main Content ] end -->
+{% endblock content %}
+{% block extrajs %}
+<!-- custom-chart js -->
+<script src="{% static 'assets/js/pages/dashboard-main.js' %}"></script>
+<!-- Apex Chart -->
+<script src="{% static 'assets/js/plugins/apexcharts.min.js' %}"></script>
+{% endblock extrajs %}

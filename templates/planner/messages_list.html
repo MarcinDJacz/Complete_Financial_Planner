@@ -12,9 +12,20 @@
   <h1>Messages List</h1>
 
   {% if messages %}
-    <table class="table table-striped table-hover">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h2 style="color: brown; margin: 0;">{{ operations.1.budget.family.name }}</h2>
+    <form method="get" class="form-inline mb-3">
+    <label for="per_page">Show:</label>
+    <select name="per_page" id="per_page" onchange="this.form.submit()">
+        <option value="5" {% if per_page_value == 5 %}selected{% endif %}>5</option>
+        <option value="10" {% if per_page_value == 10 %}selected{% endif %}>10</option>
+        <option value="15" {% if per_page_value == 15 %}selected{% endif %}>15</option>
+        <option value="20" {% if per_page_value == 20 %}selected{% endif %}>20</option>
+    </select>
+    </form>
 
-
+</div>
+    <table class="table table-hover">
       <tr>
         <th>From</th>
         <th>E-Mail</th>

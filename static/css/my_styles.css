@@ -46,3 +46,12 @@ h1{
   color: red;
   font-weight: bold;
 }
+.hero{
+    width: 95%;
+    height: auto;
+    background-image: url('/static/images/background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}

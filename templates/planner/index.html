@@ -12,84 +12,87 @@
 </style>
 {% endblock %}
 {% block content %}
-<!-- [ Main Content ] start -->
-<div class="row">
-    <!-- order-card start -->
-     <div class="col-md-6 col-xl-3">
-        <div class="card bg-c-yellow order-card">
-            <div class="card-body">
-                <h6 class="text-white">Savings</h6>
-                <h2 class="text-end text-white">
-                    <img src="{% static 'icons/dollar.svg' %}" alt="Inmates" />
-                    <span>{{ summary_savings }} zł</span>
-                </h2>
-                <h6 class="text-white">Debts</h6>
-                <h2 class="text-end text-white">
-                    <img src="{% static 'icons/dollar.svg' %}" alt="Inmates" />
-                    <span>{{ summary_debts }} zł</span></h2>
-                <p class="m-b-0">Difference<span class="float-end {% if sum_saving_sum_debts > 0 %}positive{% elif sum_saving_sum_debts < 0 %}negative{% endif %}">{{ sum_saving_sum_debts }}</span></p>
-              </div>
+<div class="hero">
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <!-- order-card start -->
+         <div class="col-md-6 col-xl-3">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-body">
+                    <h6 class="text-white">Savings</h6>
+                    <h2 class="text-end text-white">
+                        <img src="{% static 'icons/dollar.svg' %}" alt="Inmates" />
+                        <span>{{ summary_savings }} zł</span>
+                    </h2>
+                    <h6 class="text-white">Debts</h6>
+                    <h2 class="text-end text-white">
+                        <img src="{% static 'icons/dollar.svg' %}" alt="Inmates" />
+                        <span>{{ summary_debts }} zł</span></h2>
+                    <p class="m-b-0">Difference<span class="float-end {% if sum_saving_sum_debts > 0 %}positive{% elif sum_saving_sum_debts < 0 %}negative{% endif %}">{{ sum_saving_sum_debts }}</span></p>
+                  </div>
+            </div>
         </div>
-    </div>
-    <div class="col-md-6 col-xl-3">
-        <div class="card bg-c-green order-card">
-            <div class="card-body">
-                <h6 class="text-white">Income</h6>
-                <h2 class="text-end text-white"><img src="{% static 'icons/dollar.svg' %}" alt="Inmates" /><span>{{ income_sum }} zł</span>
-                <h6 class="text-white">Expense</h6>
-                <h2 class="text-end text-white"><img src="{% static 'icons/dollar.svg' %}" alt="Inmates" /><span>-{{ expense_sum}} zł</span>
-                </h2>
-                <p class="m-b-0">Surplus/deficit<span class="float-end {% if surplus_deficit > 0 %}positive{% elif surplus_deficit < 0 %}negative{% endif %}">{{ surplus_deficit }} zł</span></p>
+        <div class="col-md-6 col-xl-3">
+            <div class="card bg-c-green order-card">
+                <div class="card-body">
+                    <h6 class="text-white">Income</h6>
+                    <h2 class="text-end text-white"><img src="{% static 'icons/dollar.svg' %}" alt="Inmates" /><span>{{ income_sum }} zł</span>
+                    <h6 class="text-white">Expense</h6>
+                    <h2 class="text-end text-white"><img src="{% static 'icons/dollar.svg' %}" alt="Inmates" /><span>-{{ expense_sum}} zł</span>
+                    </h2>
+                    <p class="m-b-0">Surplus/deficit<span class="float-end {% if surplus_deficit > 0 %}positive{% elif surplus_deficit < 0 %}negative{% endif %}">{{ surplus_deficit }} zł</span></p>
+                </div>
             </div>
         </div>
     </div>
+
+        <div class="row">
+       <div class="col-md-6 col-xl-3">
+            <div class="card bg-c-blue order-card">
+                <div class="card-body">
+                    <h6 class="text-white">Inmates</h6>
+                    <h2 class="text-end text-white">
+                        <img src="{% static 'icons/inmates.svg' %}" alt="Inmates" />
+                        <span>{{ num_inmates }}</span>
+                    </h2>
+                    <p class="m-b-0">Family<span class="float-end"> {{ family_name }}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card bg-c-red order-card">
+                <div class="card-body">
+                    <h6 class="text-white">Messages</h6>
+                    <h2 class="text-end text-white">
+                        <img src="{% static 'icons/contact.svg' %}" alt="Inmates" />
+                        <span>{{ messages_num }} new messages</span>
+                    </h2>
+                        <p class="m-b-0">Author<span class="float-end"> Marcin Djaczuk</span></p>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- order-card end -->
+        <!-- users visite start -->
+        <div class="row">
+        <div class="col-md-12 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1>
+                      Savings & Investments vs Debts
+                    </h1>
+                </div>
+                <div class="card-body ps-0 pb-0">
+                    {{ graph_html|safe }}
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <!-- [ Main Content ] end -->
+
+    {% endblock content %}
 </div>
-
-    <div class="row">
-   <div class="col-md-6 col-xl-3">
-        <div class="card bg-c-blue order-card">
-            <div class="card-body">
-                <h6 class="text-white">Inmates</h6>
-                <h2 class="text-end text-white">
-                    <img src="{% static 'icons/inmates.svg' %}" alt="Inmates" />
-                    <span>{{ num_inmates }}</span>
-                </h2>
-                <p class="m-b-0">Family<span class="float-end"> {{ family_name }}</span></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-xl-3">
-        <div class="card bg-c-red order-card">
-            <div class="card-body">
-                <h6 class="text-white">Messages</h6>
-                <h2 class="text-end text-white">
-                    <img src="{% static 'icons/contact.svg' %}" alt="Inmates" />
-                    <span>{{ messages_num }} new messages</span>
-                </h2>
-                    <p class="m-b-0">Author<span class="float-end"> Marcin Djaczuk</span></p>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- order-card end -->
-    <!-- users visite start -->
-    <div class="row">
-    <div class="col-md-12 col-xl-6">
-        <div class="card">
-            <div class="card-header">
-                <h1>
-                  Savings & Investments vs Debts
-                </h1>
-            </div>
-            <div class="card-body ps-0 pb-0">
-                {{ graph_html|safe }}
-            </div>
-        </div>
-    </div>
-    </div>
-
-<!-- [ Main Content ] end -->
-{% endblock content %}
 
 {% block extrajs %}
 <!-- custom-chart js -->

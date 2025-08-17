@@ -23,6 +23,7 @@ def index(request):
     request.session['num_visit'] = num_visit + 1
 
     portfolios = Portfolio.objects.all()
+    num_portfolio = portfolios.count()
     total_value = sum(p.current_value for p in portfolios)
     messages_num = ContactMessage.objects.filter(is_read=False).count()
     context = {
@@ -35,9 +36,10 @@ def index(request):
         "num_visit": num_visit + 1,
         "surplus_deficit": (income_sum - expense_sum),
         "portfolios": portfolios,
-        "summary_investments": total_value,
+        "summary_investments": round(total_value,2),
         "sum_saving_sum_debts": (summary_savings - summary_debts),
         "messages_num": messages_num,
+        "num_portfolio": num_portfolio,
     }
     context['graph_html'] = get_family_graph(request.user)
     return render(request, 'planner/index.html', context)

@@ -9,11 +9,11 @@
             <div class="card-body">
                 <h6 class="text-white">Savings</h6>
                 <h2 class="text-end text-white"><i
-                        class="feather icon-repeat float-start"></i><span>4000 zł</span></h2>
+                        class="feather icon-repeat float-start"></i><span>{{ summary_savings }} zł</span></h2>
                 <h6 class="text-white">Debts</h6>
                 <h2 class="text-end text-white"><i
-                        class="feather icon-repeat float-start"></i><span>11500 zł</span></h2>
-                <p class="m-b-0">Difference<span class="float-end">-8000zł</span></p>
+                        class="feather icon-repeat float-start"></i><span>{{ summary_debts }} zł</span></h2>
+                <p class="m-b-0">Difference<span class="float-end">-{{ sum_saving_sum_debts }}</span></p>
             </div>
         </div>
     </div>
@@ -21,11 +21,11 @@
         <div class="card bg-c-green order-card">
             <div class="card-body">
                 <h6 class="text-white">Income</h6>
-                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>7480 zł</span>
+                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>{{ income_sum }} zł</span>
                 <h6 class="text-white">Expense</h6>
-                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>-4998 zł</span>
+                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>-{{ expense_sum}} zł</span>
                 </h2>
-                <p class="m-b-0">Surplus/deficit<span class="float-end">2482 zł</span></p>
+                <p class="m-b-0">Surplus/deficit<span class="float-end">{{ surplus_deficit }} zł</span></p>
             </div>
         </div>
     </div>
@@ -36,8 +36,8 @@
         <div class="card bg-c-blue order-card">
             <div class="card-body">
                 <h6 class="text-white">Inmates</h6>
-                <h2 class="text-end text-white"><i class="feather icon-shopping-cart float-start"></i><span>3</span></h2>
-                <p class="m-b-0">Family<span class="float-end">'Nasza Rodzinka'</span></p>
+                <h2 class="text-end text-white"><i class="feather icon-shopping-cart float-start"></i><span>{{ num_inmates }}</span></h2>
+                <p class="m-b-0">Family<span class="float-end"> {{ family_name }}</span></p>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
             <div class="card-body">
                 <h6 class="text-white">Messages</h6>
                 <h2 class="text-end text-white"><i
-                        class="feather icon-repeat float-start"></i><span>12 new messages</span></h2>
+                        class="feather icon-repeat float-start"></i><span>{{ messages_num }} new messages</span></h2>
 
             </div>
         </div>

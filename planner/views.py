@@ -24,8 +24,9 @@ def index(request):
 
     portfolios = Portfolio.objects.all()
     total_value = sum(p.current_value for p in portfolios)
-
+    messages_num = ContactMessage.objects.filter(is_read=False).count()
     context = {
+        "family_name" : request.user.family.name,
         "num_inmates": num_inmates,
         "income_sum": income_sum,
         "expense_sum": expense_sum,
@@ -35,6 +36,8 @@ def index(request):
         "surplus_deficit": (income_sum - expense_sum),
         "portfolios": portfolios,
         "summary_investments": total_value,
+        "sum_saving_sum_debts": (summary_savings - summary_debts),
+        "messages_num": messages_num,
     }
     context['graph_html'] = get_family_graph(request.user)
     return render(request, 'planner/index.html', context)

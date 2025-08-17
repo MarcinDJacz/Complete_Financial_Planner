@@ -11,45 +11,57 @@
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/my_styles.css' %}">
+  {% block style %}
+  <style>
+    header{
+    background-color:#6FA3FF;
+    }
+     .form-container{
+    margin: 0 auto;
+    max-width: 500px;
+    }
+    nav{
+    background-color:#F2F2F0;
+    }
+  </style>
+  {% endblock %}
 </head>
-
 <body>
-<div class="container-fluid d-flex flex-column min-vh-100">
-  <!-- Nagłówek -->
-  <header class="d-flex justify-content-between align-items-center p-2 border-bottom">
-    {% block header %}
-      <h1 class="h5 m-0">Complete Financial Planner</h1>
-      <div>
-        {% if user.is_authenticated %}
-          <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-          </form>
-        {% else %}
-          <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
-        {% endif %}
-      </div>
-    {% endblock %}
-  </header>
+  <div class="container-fluid d-flex flex-column min-vh-100">
 
-  <!-- Główna treść -->
-  <main class="flex-fill">
-    {% block content %}
-    {% endblock %}
-  </main>
+    <header class="d-flex justify-content-between align-items-center p-2 border-bottom my1">
+      {% block header %}
+        <h1 class="h5 m-0">Complete Financial Planner</h1>
+        <div>
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button class="btn-primary btn-lg" type="submit">Logout</button>
+            </form>
+          {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
+          {% endif %}
+        </div>
+      {% endblock %}
+    </header>
 
+    <main class="flex-fill">
 
+      <section class="pcoded-main-container">
+          <div class="pcoded-content">
+            {% block content %}{% endblock content %}
+          </div>
+      </section>
 
-  <!-- Pasek nawigacji na dole -->
-  <footer class="bg-light border-top py-2 fixed-bottom">
-    {% block bottom_nav %}
-      {% include 'includes/bottom_nav.html' %}
-    {% endblock %}
-  </footer>
+    </main>
 
-
-
-</div>
+    <footer class="bg-light border-top py-2 fixed-bottom">
+      {% block bottom_nav %}
+        {% include 'includes/bottom_nav.html' %}
+      {% endblock %}
+    </footer>
+  </div>
 
 </body>
 </html>

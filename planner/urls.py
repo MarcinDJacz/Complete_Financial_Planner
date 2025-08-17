@@ -12,7 +12,8 @@ from planner.views import (index,
                            DashboardView,
                            FamilyUpdateView,
                            MessagesListView,
-                           MessageDetailView)
+                           MessageDetailView,
+                           MessagesDeleteView)
 
 urlpatterns = [
     path("", index, name="index"),
@@ -22,6 +23,7 @@ urlpatterns = [
     path("contact/", ContactMessageView.as_view(), name="contact"),
     path("messages/", MessagesListView.as_view(), name="messages_list"),
     path("messages/<int:pk>", MessageDetailView.as_view(), name="message_detail"),
+    path("messages/<int:pk>/delete/", MessagesDeleteView.as_view(), name="message_delete"),
     path("operations/", OperationsListView.as_view(), name="operations"),
     path("operations/create/", OperationsCreateView.as_view(), name="operations_create"),
     path("operations/<int:pk>/delete/", OperationsDeleteView.as_view(), name="operations_delete"),

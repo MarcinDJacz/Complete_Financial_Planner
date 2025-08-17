@@ -4,5 +4,5 @@
   <h1>Message: {{ object }}</h1>
   <br><br>
   <p> {{ object.message }}</p>
-
+  <a class="btn btn-danger" href="{% url 'planner:message_delete' pk=object.id %}">Delete</a>
 {% endblock %}

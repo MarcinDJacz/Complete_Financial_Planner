@@ -171,3 +171,10 @@ class MessageDetailView(LoginRequiredMixin, generic.DetailView):
             obj.is_read = True
             obj.save(update_fields=["is_read"])
         return obj
+
+
+class MessagesDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = ContactMessage
+    fields = '__all__'
+    template_name = "planner/message_format_confirm_delete.html"
+    success_url = reverse_lazy('planner:messages_list')

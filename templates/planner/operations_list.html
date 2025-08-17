@@ -1,10 +1,14 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
   <h1>
     Budget's Operations List
     <a class="btn btn-primary" style="float: right" href="{% url 'planner:operations_create' %}">+</a>
   </h1>
+  <form method="GET" action="" class="form-inline">
+      {{ search_form|crispy }}
+      <input class = "btn btn-secondary" type="submit" value="🔍">
+  </form>
   {% if operations %}
     <table class="table table-striped">
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">

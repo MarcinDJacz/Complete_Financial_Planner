@@ -6,7 +6,7 @@ from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family, Con
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import UserSettingsForm, FamilySettingsForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
+from .forms import UserSettingsForm, FamilySettingsForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
 from .utils import get_family_graph
 
 
@@ -85,10 +85,19 @@ class OperationsListView(LoginRequiredMixin, generic.ListView):
         return 10
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(OperationsListView, self).get_context_data(**kwargs)
+        description = self.request.GET.get("description", "")
+        context["search_form"] = OperationSearchForm(initial={"description": description})
         per_page = self.request.GET.get('per_page')
         context['per_page_value'] = int(per_page) if per_page and per_page.isdigit() else 10
         return context
+
+    def get_queryset(self):
+        queryset = Operation.objects.all()
+        form = OperationSearchForm(self.request.GET)
+        if form.is_valid() and form.cleaned_data.get("description"):
+            queryset = queryset.filter(description__icontains=form.cleaned_data["description"])
+        return queryset
 
 class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
     model = Operation

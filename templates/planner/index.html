@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block style %}
+{{ block.super }}
+<style>
+    h2 img{
+    width: 20px;
+    height: 20px;
+    float: left;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <!-- [ Main Content ] start -->
 <div class="row">
@@ -8,24 +19,27 @@
         <div class="card bg-c-yellow order-card">
             <div class="card-body">
                 <h6 class="text-white">Savings</h6>
-                <h2 class="text-end text-white"><i
-                        class="feather icon-repeat float-start"></i><span>{{ summary_savings }} zł</span></h2>
+                <h2 class="text-end text-white">
+                    <img src="{% static 'icons/dollar.svg' %}" alt="Inmates" />
+                    <span>{{ summary_savings }} zł</span>
+                </h2>
                 <h6 class="text-white">Debts</h6>
-                <h2 class="text-end text-white"><i
-                        class="feather icon-repeat float-start"></i><span>{{ summary_debts }} zł</span></h2>
-                <p class="m-b-0">Difference<span class="float-end">-{{ sum_saving_sum_debts }}</span></p>
-            </div>
+                <h2 class="text-end text-white">
+                    <img src="{% static 'icons/dollar.svg' %}" alt="Inmates" />
+                    <span>{{ summary_debts }} zł</span></h2>
+                <p class="m-b-0">Difference<span class="float-end {% if sum_saving_sum_debts > 0 %}positive{% elif sum_saving_sum_debts < 0 %}negative{% endif %}">{{ sum_saving_sum_debts }}</span></p>
+              </div>
         </div>
     </div>
     <div class="col-md-6 col-xl-3">
         <div class="card bg-c-green order-card">
             <div class="card-body">
                 <h6 class="text-white">Income</h6>
-                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>{{ income_sum }} zł</span>
+                <h2 class="text-end text-white"><img src="{% static 'icons/dollar.svg' %}" alt="Inmates" /><span>{{ income_sum }} zł</span>
                 <h6 class="text-white">Expense</h6>
-                <h2 class="text-end text-white"><i class="feather icon-tag float-start"></i><span>-{{ expense_sum}} zł</span>
+                <h2 class="text-end text-white"><img src="{% static 'icons/dollar.svg' %}" alt="Inmates" /><span>-{{ expense_sum}} zł</span>
                 </h2>
-                <p class="m-b-0">Surplus/deficit<span class="float-end">{{ surplus_deficit }} zł</span></p>
+                <p class="m-b-0">Surplus/deficit<span class="float-end {% if surplus_deficit > 0 %}positive{% elif surplus_deficit < 0 %}negative{% endif %}">{{ surplus_deficit }} zł</span></p>
             </div>
         </div>
     </div>
@@ -36,7 +50,7 @@
         <div class="card bg-c-blue order-card">
             <div class="card-body">
                 <h6 class="text-white">Inmates</h6>
-                <h2 class="text-end text-white"><i class="feather icon-shopping-cart float-start"></i><span>{{ num_inmates }}</span></h2>
+                <h2 class="text-end text-white"><img src="{% static 'icons/inmates.svg' %}" alt="Inmates" /><span>{{ num_inmates }}</span></h2>
                 <p class="m-b-0">Family<span class="float-end"> {{ family_name }}</span></p>
             </div>
         </div>
@@ -45,8 +59,9 @@
         <div class="card bg-c-red order-card">
             <div class="card-body">
                 <h6 class="text-white">Author</h6>
-                <h2 class="text-end text-white"><i
-                        class="feather icon-award float-start"></i><span>Marcin Djaczuk</span></h2>
+                <h2 class="text-end text-white">
+                    <img src="{% static 'icons/author.svg' %}" alt="Inmates" />
+                    <span>Marcin Djaczuk</span></h2>
                 <p class="m-b-0">E-mail<span class="float-end">marcindjaczuk@gmail.com</span></p>
             </div>
         </div>
@@ -75,8 +90,9 @@
         <div class="card bg-c-purple order-card">
             <div class="card-body">
                 <h6 class="text-white">Messages</h6>
-                <h2 class="text-end text-white"><i
-                        class="feather icon-repeat float-start"></i><span>{{ messages_num }} new messages</span></h2>
+                <h2 class="text-end text-white">
+                    <img src="{% static 'icons/contact.svg' %}" alt="Inmates" />
+                    <span>{{ messages_num }} new messages</span></h2>
 
             </div>
         </div>
@@ -88,6 +104,7 @@
 
 <!-- [ Main Content ] end -->
 {% endblock content %}
+
 {% block extrajs %}
 <!-- custom-chart js -->
 <script src="{% static 'assets/js/pages/dashboard-main.js' %}"></script>

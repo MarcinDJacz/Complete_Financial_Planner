@@ -54,12 +54,12 @@
 
       <section class="pcoded-main-container">
           <div class="pcoded-content">
-            {% block content %}{% endblock content %}
+            {% block content %}
+            {% endblock content %}
           </div>
       </section>
 
     </main>
-
     <footer class="bg-light border-top py-2 fixed-bottom">
       {% block bottom_nav %}
         {% include 'includes/bottom_nav.html' %}

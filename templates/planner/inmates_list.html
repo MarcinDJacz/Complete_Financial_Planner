@@ -4,7 +4,7 @@
   <h1>Inmates List<a class="btn btn-primary" style="float: right" href="{% url 'planner:inmate-create' %}">Add new User</a></h1>
 
   {% if inmates %}
-    <h2 style="text-align: center; color: brown">{{ inmates.1.family.name }}<a class="btn btn-primary" style="float: right" href="{% url 'planner:family_update' pk=inmates.1.family.id %}">Change name</a></h2>
+    <h2 style="text-align: center; color: #1691AD">"{{ inmates.1.family.name }}"<a class="btn btn-primary" style="float: right" href="{% url 'planner:family_update' pk=inmates.1.family.id %}">Change name</a></h2>
     <table class="table table-striped table-success">
 
 

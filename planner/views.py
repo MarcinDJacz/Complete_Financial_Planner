@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family
+from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family, ContactMessage
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
@@ -138,3 +138,21 @@ class FamilyUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     success_url = reverse_lazy('planner:inmates_list')
     template_name = "planner/family_update.html"
+
+
+class MessagesListView(LoginRequiredMixin, generic.ListView):
+    model = ContactMessage
+    template_name = "planner/messages_list.html"
+    context_object_name = "messages"
+
+    def get_paginate_by(self, queryset):
+        per_page = self.request.GET.get('per_page')
+        if per_page and per_page.isdigit():
+            return int(per_page)
+        return 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        per_page = self.request.GET.get('per_page')
+        context['per_page_value'] = int(per_page) if per_page and per_page.isdigit() else 10
+        return context

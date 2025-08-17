@@ -10,7 +10,8 @@ from planner.views import (index,
                            OperationsUpdateView,
                            InmateCreateView,
                            DashboardView,
-                           FamilyUpdateView)
+                           FamilyUpdateView,
+                           MessagesListView)
 
 urlpatterns = [
     path("", index, name="index"),
@@ -18,6 +19,7 @@ urlpatterns = [
     path("inmates/<int:pk>", InmatesDetailView.as_view(), name="inmates_detail"),
     path("settings/", UserSettingsView.as_view(), name="user_settings"),
     path("contact/", ContactMessageView.as_view(), name="contact"),
+    path("messages/", MessagesListView.as_view(), name="messages_list"),
     path("operations/", OperationsListView.as_view(), name="operations"),
     path("operations/create/", OperationsCreateView.as_view(), name="operations_create"),
     path("operations/<int:pk>/delete/", OperationsDeleteView.as_view(), name="operations_delete"),

@@ -66,9 +66,26 @@
                 {{ graph_html|safe }}
             </div>
         </div>
-    </div></div>
+    </div>
+    </div>
 
+<div class="row">
+    <a href="{% url 'planner:messages_list' %}">
+    <div class="col-md-6 col-xl-3">
+        <div class="card bg-c-purple order-card">
+            <div class="card-body">
+                <h6 class="text-white">Messages</h6>
+                <h2 class="text-end text-white"><i
+                        class="feather icon-repeat float-start"></i><span>12 new messages</span></h2>
+
+            </div>
+        </div>
+    </div>
+    </a>
 </div>
+
+
+
 <!-- [ Main Content ] end -->
 {% endblock content %}
 {% block extrajs %}

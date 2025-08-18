@@ -109,7 +109,7 @@ class Portfolio(models.Model):
 
     @property
     def current_value(self):
-        return sum(instr.current_value for instr in self.instrument_set.all())
+        return round(sum(instr.current_value for instr in self.instrument_set.all()), 2)
 
 
 class Instrument(models.Model):
@@ -126,7 +126,7 @@ class Instrument(models.Model):
     def current_value(self):
         latest_price = StockPrice.get_latest_price(self.symbol)
         if latest_price:
-            return self.quantity * latest_price.price
+            return round(self.quantity * latest_price.price, 2)
         return 0
 
 

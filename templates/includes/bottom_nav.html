@@ -9,34 +9,34 @@
 
     <li>
       <a href="{% url 'planner:inmates_list' %}" class="nav-icon d-flex align-items-center justify-content-center">
-        <img src="{% static 'icons/inmates.svg' %}" alt="Inmates" />
+        <img src="{% static 'icons/inmates.svg' %}" alt="Inmates"/>
       </a>
     </li>
 
     <li>
       <a href="{% url 'planner:operations' %}" class="nav-icon d-flex align-items-center justify-content-center">
-        <img src="{% static 'icons/operations.svg' %}" alt="Operations" />
+        <img src="{% static 'icons/operations.svg' %}" alt="Operations"/>
       </a>
     </li>
     <li>
       <a href="{% url 'planner:dashboard' %}" class="nav-icon d-flex align-items-center justify-content-center">
-        <img src="{% static 'icons/charts.svg' %}" alt="Charts" />
+        <img src="{% static 'icons/charts.svg' %}" alt="Charts"/>
       </a>
     </li>
     <li>
       {% if user.is_authenticated %}
-        <a href="{% url 'planner:messages_list' %}" class="nav-icon d-flex align-items-center justify-content-center">
-        <img src="{% static 'icons/contact.svg' %}" alt="Settings" />
-        </a>
+      <a href="{% url 'planner:messages_list' %}" class="nav-icon d-flex align-items-center justify-content-center">
+        <img src="{% static 'icons/contact.svg' %}" alt="Settings"/>
+      </a>
       {% else %}
-        <a href="{% url 'planner:contact' %}" class="nav-icon d-flex align-items-center justify-content-center">
-        <img src="{% static 'icons/contact.svg' %}" alt="Settings" />
-        </a>
+      <a href="{% url 'planner:contact' %}" class="nav-icon d-flex align-items-center justify-content-center">
+        <img src="{% static 'icons/contact.svg' %}" alt="Settings"/>
+      </a>
       {% endif %}
     </li>
     <li>
       <a href="{% url 'planner:user_settings' %}" class="nav-icon d-flex align-items-center justify-content-center">
-        <img src="{% static 'icons/settings.svg' %}" alt="Contact" />
+        <img src="{% static 'icons/settings.svg' %}" alt="Contact"/>
       </a>
     </li>
 

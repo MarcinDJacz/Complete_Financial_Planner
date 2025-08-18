@@ -29,7 +29,6 @@ class CustomUser(AbstractUser):
         return reverse("planner:inmates_detail", args=[str(self.id)])
 
 
-
 class Category(models.Model):
     name = models.CharField(max_length=100)
     CATEGORY_TYPES = [
@@ -85,7 +84,6 @@ class Debt(models.Model):
 class SavingCategory(models.Model):
     name = models.CharField(max_length=100)
 
-
     def __str__(self):
         return self.name
 
@@ -120,9 +118,10 @@ class Instrument(models.Model):
     name = models.CharField(max_length=100)
     quantity = models.DecimalField(max_digits=12, decimal_places=4)
     date = models.DateField(null=True, blank=True)
+
     def __str__(self):
         return f"{self.symbol} - {self.quantity}"
-    
+
     @property
     def current_value(self):
         latest_price = StockPrice.get_latest_price(self.symbol)

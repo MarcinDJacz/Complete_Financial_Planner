@@ -45,14 +45,14 @@ class OperationCreateForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name','email',)
+        fields = ('username', 'first_name', 'last_name', 'email',)
 
 
 class OperationSearchForm(forms.Form):
     description = forms.CharField(max_length=255,
-                            required=False,
-                            label="",
-                            widget=forms.TextInput(attrs={'placeholder': 'Search by description'}))
+                                  required=False,
+                                  label="",
+                                  widget=forms.TextInput(attrs={'placeholder': 'Search by description'}))
 
 
 class SavingsCreationForm(forms.ModelForm):

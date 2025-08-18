@@ -6,7 +6,9 @@ from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family, Con
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import UserSettingsForm, InstrumentCreationForm, PortfoliosCreationForm, DebtCreationForm, FamilySettingsForm, SavingsCreationForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
+from .forms import UserSettingsForm, InstrumentCreationForm, PortfoliosCreationForm, DebtCreationForm, \
+    FamilySettingsForm, SavingsCreationForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, \
+    CustomUserCreationForm
 from .utils import get_family_graph
 
 
@@ -27,7 +29,7 @@ def index(request):
     total_value = sum(p.current_value for p in portfolios)
     messages_num = ContactMessage.objects.filter(is_read=False).count()
     context = {
-        "family_name" : request.user.family.name,
+        "family_name": request.user.family.name,
         "num_inmates": num_inmates,
         "income_sum": income_sum,
         "expense_sum": expense_sum,
@@ -36,7 +38,7 @@ def index(request):
         "num_visit": num_visit + 1,
         "surplus_deficit": (income_sum - expense_sum),
         "portfolios": portfolios,
-        "summary_investments": round(total_value,2),
+        "summary_investments": round(total_value, 2),
         "sum_saving_sum_debts": (summary_savings - summary_debts),
         "messages_num": messages_num,
         "num_portfolio": num_portfolio,
@@ -75,6 +77,7 @@ class ContactMessageView(generic.FormView):
         form.save()
         return super().form_valid(form)
 
+
 class OperationsListView(LoginRequiredMixin, generic.ListView):
     model = Operation
     template_name = "planner/operations_list.html"
@@ -100,6 +103,7 @@ class OperationsListView(LoginRequiredMixin, generic.ListView):
         if form.is_valid() and form.cleaned_data.get("description"):
             queryset = queryset.filter(description__icontains=form.cleaned_data["description"])
         return queryset
+
 
 class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
     model = Operation
@@ -230,6 +234,7 @@ class DebtsCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy('planner:savings_and_debts')
     template_name = "planner/debts_create_form.html"
 
+
 class DebtsDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Debt
     fields = '__all__'
@@ -269,6 +274,7 @@ class PortfoliosUpdateView(LoginRequiredMixin, generic.UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('planner:portfolios_list')
     template_name = "planner/portfolios_update_form.html"
+
 
 # Instruments:
 class InstrumentCreateView(LoginRequiredMixin, generic.CreateView):

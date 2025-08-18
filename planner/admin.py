@@ -15,6 +15,8 @@ admin.site.register(CurrencyRate)
 admin.site.register(StockPrice)
 admin.site.register(Family)
 admin.site.register(ContactMessage)
+
+
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     pass

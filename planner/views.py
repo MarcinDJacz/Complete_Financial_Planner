@@ -1,14 +1,27 @@
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family, ContactMessage, Instrument
+from .models import (CustomUser,
+                     Operation,
+                     Savings,
+                     Debt,
+                     Portfolio,
+                     Family,
+                     ContactMessage,
+                     Instrument)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import UserSettingsForm, InstrumentCreationForm, PortfoliosCreationForm, DebtCreationForm, \
-    FamilySettingsForm, SavingsCreationForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, \
-    CustomUserCreationForm
+from .forms import (UserSettingsForm,
+                    InstrumentCreationForm,
+                    PortfoliosCreationForm,
+                    DebtCreationForm,
+                    FamilySettingsForm,
+                    SavingsCreationForm,
+                    OperationSearchForm,
+                    ContactMessageForm,
+                    OperationCreateForm,
+                    CustomUserCreationForm)
 from .utils import get_family_graph
 from .mixins import ConfirmDeleteMixin
 
@@ -16,11 +29,14 @@ from .mixins import ConfirmDeleteMixin
 @login_required
 def index(request):
     num_inmates = CustomUser.objects.all().count()
-    summary_savings = Savings.objects.aggregate(total=Sum('amount'))['total'] or 0
+    summary_savings = Savings.objects.aggregate(
+        total=Sum('amount'))['total'] or 0
     summary_debts = Debt.objects.aggregate(total=Sum('amount'))['total'] or 0
-    income_sum = Operation.objects.filter(category__type='INCOME').aggregate(total=Sum('amount'))['total'] or 0
+    income_sum = Operation.objects.filter(
+        category__type='INCOME').aggregate(total=Sum('amount'))['total'] or 0
 
-    expense_sum = Operation.objects.filter(category__type='EXPENSE').aggregate(total=Sum('amount'))['total'] or 0
+    expense_sum = Operation.objects.filter(
+        category__type='EXPENSE').aggregate(total=Sum('amount'))['total'] or 0
 
     num_visit = request.session.get('num_visit', 0)
     request.session['num_visit'] = num_visit + 1
@@ -93,20 +109,24 @@ class OperationsListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(OperationsListView, self).get_context_data(**kwargs)
         description = self.request.GET.get("description", "")
-        context["search_form"] = OperationSearchForm(initial={"description": description})
+        context["search_form"] = OperationSearchForm(
+            initial={"description": description})
         per_page = self.request.GET.get('per_page')
-        context['per_page_value'] = int(per_page) if per_page and per_page.isdigit() else 10
+        context['per_page_value'] = int(per_page) if \
+            (per_page and per_page.isdigit()) else 10
         return context
 
     def get_queryset(self):
         queryset = Operation.objects.all()
         form = OperationSearchForm(self.request.GET)
         if form.is_valid() and form.cleaned_data.get("description"):
-            queryset = queryset.filter(description__icontains=form.cleaned_data["description"])
+            queryset = queryset.filter(
+                description__icontains=form.cleaned_data["description"])
         return queryset
 
 
-class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
+class OperationsCreateView(LoginRequiredMixin,
+                           generic.CreateView):
     model = Operation
     form_class = OperationCreateForm
     success_url = reverse_lazy('planner:operations')
@@ -117,7 +137,9 @@ class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
         return kwargs
 
 
-class OperationsDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
+class OperationsDeleteView(ConfirmDeleteMixin,
+                           LoginRequiredMixin,
+                           generic.DeleteView):
     model = Operation
     fields = '__all__'
     confirm_title = "Delete operation"
@@ -174,7 +196,8 @@ class MessagesListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         per_page = self.request.GET.get('per_page')
-        context['per_page_value'] = int(per_page) if per_page and per_page.isdigit() else 10
+        context['per_page_value'] = int(per_page) if \
+            (per_page and per_page.isdigit()) else 10
         return context
 
 
@@ -190,10 +213,11 @@ class MessageDetailView(LoginRequiredMixin, generic.DetailView):
         return obj
 
 
-class MessagesDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
+class MessagesDeleteView(ConfirmDeleteMixin,
+                         LoginRequiredMixin,
+                         generic.DeleteView):
     model = ContactMessage
     fields = '__all__'
-    #template_name = "planner/message_format_confirm_delete.html"
     confirm_title = "Delete message"
     confirm_message = "This will permanently remove this message. Continue?"
     success_url = reverse_lazy('planner:messages_list')
@@ -225,7 +249,9 @@ class SavingsUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "planner/savings_update_form.html"
 
 
-class SavingsDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
+class SavingsDeleteView(ConfirmDeleteMixin,
+                        LoginRequiredMixin,
+                        generic.DeleteView):
     model = Savings
     fields = '__all__'
     confirm_title = "Delete Saving"
@@ -240,7 +266,9 @@ class DebtsCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "planner/debts_create_form.html"
 
 
-class DebtsDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
+class DebtsDeleteView(ConfirmDeleteMixin,
+                      LoginRequiredMixin,
+                      generic.DeleteView):
     model = Debt
     fields = '__all__'
     confirm_title = "Delete Saving"
@@ -268,15 +296,19 @@ class PortfoliosCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "planner/portfolios_create_form.html"
 
 
-class PortfoliosDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
+class PortfoliosDeleteView(ConfirmDeleteMixin,
+                           LoginRequiredMixin,
+                           generic.DeleteView):
     model = Portfolio
     fields = '__all__'
     confirm_title = "Delete Portfolio"
-    confirm_message = "This will permanently remove this Portfolio with all data connected. Continue?"
+    confirm_message = ("This will permanently remove "
+                       "this Portfolio with all data connected. Continue?")
     success_url = reverse_lazy('planner:portfolios_list')
 
 
-class PortfoliosUpdateView(LoginRequiredMixin, generic.UpdateView):
+class PortfoliosUpdateView(LoginRequiredMixin,
+                           generic.UpdateView):
     model = Portfolio
     fields = '__all__'
     success_url = reverse_lazy('planner:portfolios_list')
@@ -284,14 +316,17 @@ class PortfoliosUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 # Instruments:
-class InstrumentCreateView(LoginRequiredMixin, generic.CreateView):
+class InstrumentCreateView(LoginRequiredMixin,
+                           generic.CreateView):
     model = Instrument
     form_class = InstrumentCreationForm
     success_url = reverse_lazy('planner:portfolios_list')
     template_name = "planner/instrument_create_form.html"
 
 
-class InstrumentDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
+class InstrumentDeleteView(ConfirmDeleteMixin,
+                           LoginRequiredMixin,
+                           generic.DeleteView):
     model = Instrument
     fields = '__all__'
     confirm_title = "Delete Instrument"
@@ -299,7 +334,8 @@ class InstrumentDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.Delet
     success_url = reverse_lazy('planner:portfolios_list')
 
 
-class InstrumentUpdateView(LoginRequiredMixin, generic.UpdateView):
+class InstrumentUpdateView(LoginRequiredMixin,
+                           generic.UpdateView):
     model = Instrument
     fields = '__all__'
     success_url = reverse_lazy('planner:portfolios_list')

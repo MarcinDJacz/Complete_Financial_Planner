@@ -1,6 +1,3 @@
-from django.urls import reverse
-
-
 class ConfirmDeleteMixin:
     """
     One view of delete

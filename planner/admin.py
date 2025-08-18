@@ -1,7 +1,18 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Category, CustomUser, Family, Budget, Operation, Debt, SavingCategory, Savings, Portfolio, \
-    Instrument, CurrencyRate, StockPrice, ContactMessage
+from .models import (Category,
+                     CustomUser,
+                     Family,
+                     Budget,
+                     Operation,
+                     Debt,
+                     SavingCategory,
+                     Savings,
+                     Portfolio,
+                     Instrument,
+                     CurrencyRate,
+                     StockPrice,
+                     ContactMessage)
 
 admin.site.register(Category)
 admin.site.register(Budget)

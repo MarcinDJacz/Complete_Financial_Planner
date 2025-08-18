@@ -1,9 +1,14 @@
-from datetime import date
-
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from planner.models import CustomUser, Instrument, Portfolio, Family, ContactMessage, Operation, Budget, Savings, Debt
+from planner.models import (CustomUser,
+                            Instrument,
+                            Portfolio,
+                            Family,
+                            ContactMessage,
+                            Operation,
+                            Budget,
+                            Savings,
+                            Debt)
 from django.utils import timezone
 
 
@@ -49,10 +54,12 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class OperationSearchForm(forms.Form):
-    description = forms.CharField(max_length=255,
-                                  required=False,
-                                  label="",
-                                  widget=forms.TextInput(attrs={'placeholder': 'Search by description'}))
+    description = (
+        forms.CharField(max_length=255,
+                        required=False,
+                        label="",
+                        widget=forms.TextInput(
+                            attrs={'placeholder': 'Search by description'})))
 
 
 class SavingsCreationForm(forms.ModelForm):

@@ -31,7 +31,9 @@ def get_family_graph(user):
         total_debt = 0
         for debt in debts:
             if debt.date <= d:
-                months_passed = max(0, (d.year - debt.date.year) * 12 + (d.month - debt.date.month))
+                months_passed = max(0,
+                                    (d.year - debt.date.year)
+                                    * 12 + (d.month - debt.date.month))
                 total_payment = (debt.rate or 0) * months_passed
                 total_debt += max(0, debt.amount - total_payment)
         debts_cum.append(total_debt)
@@ -39,13 +41,23 @@ def get_family_graph(user):
     investments_cum = []
     total_investments = 0
     for d in dates:
-        total_investments += sum(i.current_value for i in investments if i.date == d)
+        total_investments += sum(i.current_value for
+                                 i in investments if i.date == d)
         investments_cum.append(total_investments)
 
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=dates, y=savings_cum, mode='lines', name='Savings'))
-    fig.add_trace(go.Scatter(x=dates, y=debts_cum, mode='lines', name='Debts'))
-    fig.add_trace(go.Scatter(x=dates, y=investments_cum, mode='lines', name='Investments'))
+    fig.add_trace(go.Scatter(x=dates,
+                             y=savings_cum,
+                             mode='lines',
+                             name='Savings'))
+    fig.add_trace(go.Scatter(x=dates,
+                             y=debts_cum,
+                             mode='lines',
+                             name='Debts'))
+    fig.add_trace(go.Scatter(x=dates,
+                             y=investments_cum,
+                             mode='lines',
+                             name='Investments'))
     fig.update_layout(title='Family Finance Overview')
 
     return fig.to_html(full_html=False)

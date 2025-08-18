@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from planner.models import CustomUser, Family, ContactMessage, Operation, Budget, Savings, Debt
+from planner.models import CustomUser, Instrument, Portfolio, Family, ContactMessage, Operation, Budget, Savings, Debt
 from django.utils import timezone
 
 
@@ -71,4 +71,19 @@ class DebtCreationForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'due_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+
+class PortfoliosCreationForm(forms.ModelForm):
+    class Meta():
+        model = Portfolio
+        fields = ('owner', 'name')
+
+
+class InstrumentCreationForm(forms.ModelForm):
+    class Meta:
+        model = Instrument
+        fields = ('portfolio', 'symbol', 'name', 'quantity', 'date')
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
         }

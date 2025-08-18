@@ -1,4 +1,6 @@
 from django.urls import path
+
+from planner.models import Portfolio
 from planner.views import (index,
                            InmatesListView,
                            InmatesDetailView,
@@ -20,7 +22,14 @@ from planner.views import (index,
                            SavingsUpdateView,
                            DebtsCreateView,
                            DebtsDeleteView,
-                           DebtsUpdateView)
+                           DebtsUpdateView,
+                           PortfoliosListView,
+                           PortfoliosCreateView,
+                           PortfoliosDeleteView,
+                           PortfoliosUpdateView,
+                           InstrumentCreateView,
+                           InstrumentUpdateView,
+                           InstrumentDeleteView)
 
 urlpatterns = [
     path("", index, name="index"),
@@ -51,6 +60,13 @@ urlpatterns = [
     path("debt/<int:pk>/delete/", DebtsDeleteView.as_view(), name="debt_delete"),
     path("debt/<int:pk>/update/", DebtsUpdateView.as_view(), name="debt_update"),
 
+    path("portfolios/", PortfoliosListView.as_view(), name="portfolios_list"),
+    path("portfolios/create/", PortfoliosCreateView.as_view(), name="portfolios_create"),
+    path("portfolios/<int:pk>/delete/", PortfoliosDeleteView.as_view(), name="portfolios_delete"),
+    path("portfolios/<int:pk>/update/", PortfoliosUpdateView.as_view(), name="portfolios_update"),
+    path("instrument/create/", InstrumentCreateView.as_view(), name="instrument_create"),
+    path("instrument/<int:pk>/update/", InstrumentUpdateView.as_view(), name="instrument_update"),
+    path("instrument/<int:pk>/delete/", InstrumentDeleteView.as_view(), name="instrument_delete"),
 ]
 
 app_name = "planner"

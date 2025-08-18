@@ -2,11 +2,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.db.models import Sum
-from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family, ContactMessage
+from .models import CustomUser, Operation, Savings, Debt, Portfolio, Family, ContactMessage, Instrument
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from .forms import UserSettingsForm, DebtCreationForm, FamilySettingsForm, SavingsCreationForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
+from .forms import UserSettingsForm, InstrumentCreationForm, PortfoliosCreationForm, DebtCreationForm, FamilySettingsForm, SavingsCreationForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, CustomUserCreationForm
 from .utils import get_family_graph
 
 
@@ -242,3 +242,51 @@ class DebtsUpdateView(LoginRequiredMixin, generic.UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('planner:savings_and_debts')
     template_name = "planner/debt_update_form.html"
+
+
+class PortfoliosListView(LoginRequiredMixin, generic.ListView):
+    model = Portfolio
+    template_name = "planner/portfolios_list.html"
+    context_object_name = "portfolios"
+
+
+class PortfoliosCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Portfolio
+    form_class = PortfoliosCreationForm
+    success_url = reverse_lazy('planner:portfolios_list')
+    template_name = "planner/portfolios_create_form.html"
+
+
+class PortfoliosDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Portfolio
+    fields = '__all__'
+    template_name = "planner/portfolio_format_confirm_delete.html"
+    success_url = reverse_lazy('planner:portfolios_list')
+
+
+class PortfoliosUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Portfolio
+    fields = '__all__'
+    success_url = reverse_lazy('planner:portfolios_list')
+    template_name = "planner/portfolios_update_form.html"
+
+# Instruments:
+class InstrumentCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Instrument
+    form_class = InstrumentCreationForm
+    success_url = reverse_lazy('planner:portfolios_list')
+    template_name = "planner/instrument_create_form.html"
+
+
+class InstrumentDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Instrument
+    fields = '__all__'
+    template_name = "planner/instrument_format_confirm_delete.html"
+    success_url = reverse_lazy('planner:portfolios_list')
+
+
+class InstrumentUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Instrument
+    fields = '__all__'
+    success_url = reverse_lazy('planner:portfolios_list')
+    template_name = "planner/instrument_update_form.html"

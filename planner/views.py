@@ -10,6 +10,7 @@ from .forms import UserSettingsForm, InstrumentCreationForm, PortfoliosCreationF
     FamilySettingsForm, SavingsCreationForm, OperationSearchForm, ContactMessageForm, OperationCreateForm, \
     CustomUserCreationForm
 from .utils import get_family_graph
+from .mixins import ConfirmDeleteMixin
 
 
 @login_required
@@ -116,10 +117,11 @@ class OperationsCreateView(LoginRequiredMixin, generic.CreateView):
         return kwargs
 
 
-class OperationsDeleteView(LoginRequiredMixin, generic.DeleteView):
+class OperationsDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
     model = Operation
     fields = '__all__'
-    template_name = "planner/operations_format_confirm_delete.html"
+    confirm_title = "Delete operation"
+    confirm_message = "This will permanently remove the operation. Continue?"
     success_url = reverse_lazy('planner:operations')
 
 
@@ -188,10 +190,12 @@ class MessageDetailView(LoginRequiredMixin, generic.DetailView):
         return obj
 
 
-class MessagesDeleteView(LoginRequiredMixin, generic.DeleteView):
+class MessagesDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
     model = ContactMessage
     fields = '__all__'
-    template_name = "planner/message_format_confirm_delete.html"
+    #template_name = "planner/message_format_confirm_delete.html"
+    confirm_title = "Delete message"
+    confirm_message = "This will permanently remove this message. Continue?"
     success_url = reverse_lazy('planner:messages_list')
 
 
@@ -221,10 +225,11 @@ class SavingsUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "planner/savings_update_form.html"
 
 
-class SavingsDeleteView(LoginRequiredMixin, generic.DeleteView):
+class SavingsDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
     model = Savings
     fields = '__all__'
-    template_name = "planner/savings_format_confirm_delete.html"
+    confirm_title = "Delete Saving"
+    confirm_message = "This will permanently remove this Saving. Continue?"
     success_url = reverse_lazy('planner:savings_and_debts')
 
 
@@ -235,10 +240,11 @@ class DebtsCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "planner/debts_create_form.html"
 
 
-class DebtsDeleteView(LoginRequiredMixin, generic.DeleteView):
+class DebtsDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
     model = Debt
     fields = '__all__'
-    template_name = "planner/debts_format_confirm_delete.html"
+    confirm_title = "Delete Saving"
+    confirm_message = "This will permanently remove this Debt. Continue?"
     success_url = reverse_lazy('planner:savings_and_debts')
 
 
@@ -262,10 +268,11 @@ class PortfoliosCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "planner/portfolios_create_form.html"
 
 
-class PortfoliosDeleteView(LoginRequiredMixin, generic.DeleteView):
+class PortfoliosDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
     model = Portfolio
     fields = '__all__'
-    template_name = "planner/portfolio_format_confirm_delete.html"
+    confirm_title = "Delete Portfolio"
+    confirm_message = "This will permanently remove this Portfolio with all data connected. Continue?"
     success_url = reverse_lazy('planner:portfolios_list')
 
 
@@ -284,10 +291,11 @@ class InstrumentCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "planner/instrument_create_form.html"
 
 
-class InstrumentDeleteView(LoginRequiredMixin, generic.DeleteView):
+class InstrumentDeleteView(ConfirmDeleteMixin, LoginRequiredMixin, generic.DeleteView):
     model = Instrument
     fields = '__all__'
-    template_name = "planner/instrument_format_confirm_delete.html"
+    confirm_title = "Delete Instrument"
+    confirm_message = "This will permanently remove this Instrument. Continue?"
     success_url = reverse_lazy('planner:portfolios_list')
 
 

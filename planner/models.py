@@ -165,18 +165,6 @@ class StockPrice(models.Model):
                 .order_by('-date_fetched').first())
 
 
-class Cash(models.Model):
-    portfolio = models.ForeignKey(Portfolio,
-                                  on_delete=models.CASCADE,
-                                  related_name='cash_balances')
-    currency = models.CharField(max_length=3, default='PLN')
-    amount = models.DecimalField(max_digits=15, decimal_places=2)
-
-    def __str__(self):
-        return (f"{self.amount} {self.currency}"
-                f" in {self.portfolio.name}")
-
-
 class ContactMessage(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -1,17 +1,10 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.db.models import Sum
-from .models import (CustomUser,
-                     Operation,
-                     Savings,
-                     Debt,
-                     Portfolio,
-                     Family,
-                     ContactMessage,
-                     Instrument)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
+
 from .forms import (UserSettingsForm,
                     InstrumentCreationForm,
                     PortfoliosCreationForm,
@@ -22,8 +15,16 @@ from .forms import (UserSettingsForm,
                     ContactMessageForm,
                     OperationCreateForm,
                     CustomUserCreationForm)
-from .utils import get_family_graph
 from .mixins import ConfirmDeleteMixin
+from .models import (CustomUser,
+                     Operation,
+                     Savings,
+                     Debt,
+                     Portfolio,
+                     Family,
+                     ContactMessage,
+                     Instrument)
+from .utils import get_family_graph
 
 
 @login_required

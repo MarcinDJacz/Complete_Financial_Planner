@@ -1,7 +1,9 @@
 from django.test import TestCase
-from planner.models import CustomUser, Family, Budget, Category
-from planner.forms import OperationCreateForm
 from django.utils import timezone
+
+from planner.forms import OperationCreateForm
+from planner.models import CustomUser, Family, Budget, Category
+
 
 class FormsTests(TestCase):
     def setUp(self):

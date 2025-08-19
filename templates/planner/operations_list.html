@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>
+  Budget's Operations List
+  <a class="btn btn-primary" style="float: right" href="{% url 'planner:operations_create' %}">+</a>
+</h1>
+<form method="GET" action="" class="form-inline">
+  {{ search_form|crispy }}
+  <input class="btn btn-secondary" type="submit" value="🔍">
+</form>
+{% if operations %}
+<table class="table table-striped">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h2 style="color: brown; margin: 0;">{{ operations.1.budget.family.name }}</h2>
+    <form method="get" class="form-inline mb-3">
+      <label for="per_page">Show:</label>
+      <select name="per_page" id="per_page" onchange="this.form.submit()">
+        <option value="5" {% if per_page_value == 5 %}selected{% endif %}>5</option>
+        <option value="10" {% if per_page_value == 10 %}selected{% endif %}>10</option>
+        <option value="15" {% if per_page_value == 15 %}selected{% endif %}>15</option>
+        <option value="20" {% if per_page_value == 20 %}selected{% endif %}>20</option>
+      </select>
+    </form>
+
+  </div>
+
+
+  <tr>
+    <th>Category</th>
+    <th>Amount</th>
+    <th>Description</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  {% for op in operations %}
+  <tr>
+    <td>{{ op.category }}</td>
+    <td>
+      {% with op.amount|floatformat:2 as amt %}
+      {% if op.category.type == "INCOME" %}
+      <span class="positive">+{{ amt }}</span>
+      {% else %}
+      <span class="negative">-{{ amt }}</span>
+      {% endif %}
+      {% endwith %}
+    </td>
+    <td>{{ op.description }}</td>
+    <td><a href="{% url 'planner:operations_update' pk=op.id %}">Update</a></td>
+    <td><a href="{% url 'planner:operations_delete' pk=op.id %}">Delete</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No operations yet.</p>
+{% endif %}
+{% block pagination %}
+{% include 'includes/pagination.html' %}
+{% endblock %}
+{%  endblock %}

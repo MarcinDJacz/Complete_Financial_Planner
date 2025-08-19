@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>All Yours Portfolios:
+  <a class="btn btn-primary" style="float: right; margin-left:10px;" href="{% url 'planner:portfolios_create' %}">Add
+    new Portfolio</a>
+  <a class="btn btn-primary" style="float: right" href="{% url 'planner:instrument_create' %}">Add new Instrument</a>
+</h1>
+<br>
+{% if portfolios %}
+{% for portfolio in portfolios %}
+<h2>{{ portfolio }}
+  <a class="btn btn-primary" style="float: right; margin-left:10px;"
+     href="{% url 'planner:portfolios_update' pk=portfolio.id %}">Update Portfolio</a>
+  <a class="btn btn-primary" style="float: right" href="{% url 'planner:portfolios_delete' pk=portfolio.id %}">Delete
+    Portfolio</a>
+</h2>
+<table class="table table-striped table-success">
+  <tr>
+    <th>Ticket</th>
+    <th>Name</th>
+    <th>Quantity</th>
+    <th>Value</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  {% for instrument in portfolio.instrument_set.all %}
+  <tr>
+    <td>{{ instrument.symbol }}</td>
+    <td>{{ instrument.name }} zł</td>
+    <td>{{ instrument.quantity|floatformat:0 }}</td>
+    <td>{{ instrument.current_value|floatformat:2 }} zł</td>
+    <td><a href="{% url 'planner:instrument_update' pk=instrument.id %}">Update</a></td>
+    <td><a href="{% url 'planner:instrument_delete' pk=instrument.id %}">Delete</a></td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td>Summary</td>
+    <td></td>
+    <td></td>
+    <td>{{ portfolio.current_value|floatformat:2 }} zł</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<br>
+<hr><br>
+{%  endfor %}
+
+
+{% else %}
+<p>No portfolios yet.</p>
+{% endif %}
+
+
+{%  endblock %}

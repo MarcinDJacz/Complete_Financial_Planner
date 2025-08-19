@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Yours Savings<a class="btn btn-primary" style="float: right" href="{% url 'planner:savings_create' %}">Add new
+  Saving</a></h1>
+
+{% if savings %}
+<table class="table table-striped table-success">
+  <tr>
+    <th>Category</th>
+    <th>Amount</th>
+    <th>Date</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  {% for saving in savings %}
+  <tr>
+    <td>{{ saving.category }}</td>
+    <td>{{ saving.amount }} zł</td>
+    <td>{{ saving.date }}</td>
+    <td><a href="{% url 'planner:savings_update' pk=saving.id %}">Update</a></td>
+    <td><a href="{% url 'planner:savings_delete' pk=saving.id %}">Delete</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No savings yet.</p>
+{% endif %}
+<hr>
+<h1>Yours Debts<a class="btn btn-primary" style="float: right" href="{% url 'planner:debts_create' %}">Add new
+  Saving</a></h1>
+
+{% if debts %}
+<table class="table table-striped table-warning">
+  <tr>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Date</th>
+    <th>Due date</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  {% for debt in debts %}
+  <tr>
+    <td>{{ debt.name }}</td>
+    <td>{{ debt.amount }} zł</td>
+    <td>{{ debt.date }}</td>
+    <td>{{ debt.due_date }}</td>
+    <td><a href="{% url 'planner:debt_update' pk=debt.id %}">Update</a></td>
+    <td><a href="{% url 'planner:debt_delete' pk=debt.id %}">Delete</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No debts yet.</p>
+{% endif %}
+{%  endblock %}

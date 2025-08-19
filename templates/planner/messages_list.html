@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block styles %}
+{{ block.super }}
+<style>
+  .unread {
+  font-weight: bold;
+  color: #000;
+}
+</style>
+{% endblock %}
+{% block content %}
+<h1>Messages List</h1>
+
+{% if messages %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+  <h2 style="color: brown; margin: 0;">{{ operations.1.budget.family.name }}</h2>
+  <form method="get" class="form-inline mb-3">
+    <label for="per_page">Show:</label>
+    <select name="per_page" id="per_page" onchange="this.form.submit()">
+      <option value="5" {% if per_page_value == 5 %}selected{% endif %}>5</option>
+      <option value="10" {% if per_page_value == 10 %}selected{% endif %}>10</option>
+      <option value="15" {% if per_page_value == 15 %}selected{% endif %}>15</option>
+      <option value="20" {% if per_page_value == 20 %}selected{% endif %}>20</option>
+    </select>
+  </form>
+
+</div>
+<table class="table table-hover">
+  <tr>
+    <th>From</th>
+    <th>E-Mail</th>
+    <th>Subject</th>
+    <th>Message</th>
+  </tr>
+  {% for message in messages %}
+
+  <tr class="{% if not message.is_read %}unread{% endif %}"
+      onclick="window.location='{% url 'planner:message_detail' pk=message.id %}'" style="cursor:pointer;">
+    <td>{{ message.name }}</td>
+    <td>{{ message.email }}</td>
+    <td>{{ message.subject }}</td>
+    <td>{{ message.message|truncatechars:50 }}</td>
+  </tr>
+
+  {% endfor %}
+</table>
+{% else %}
+<p>No messages yet.</p>
+{% endif %}
+<script>
+  window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+</script>
+{%  endblock %}

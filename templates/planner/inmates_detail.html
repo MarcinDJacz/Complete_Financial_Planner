@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{%  block content %}
+<h1>Username: {{ object.username }}
+  <!--<a class="btn btn-secondary" style="float: right" href="{ url 'catalog:book-update' pk=book.id %}">Edit</a></h1>-->
+  <br><br>
+  <p>
+    <stron>First Name:</stron>
+    {{ object.first_name }}
+  </p>
+  <p>
+    <stron>Last name:</stron>
+    {{ object.last_name }}
+  </p>
+  {% endblock %}
